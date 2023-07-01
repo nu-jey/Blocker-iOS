@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct LaunchView: View {
+    @State var mainViewControl: Bool = false
     @State var modalControl: Bool = false
     @State var emailAddress: String = ""
-    @State var passWord: String = ""
+    @State var password: String = ""
+    @EnvironmentObject var authModel: AuthModel
     let logoSize = UIScreen.main.bounds.width * 0.5
     var body: some View {
         VStack {
@@ -23,18 +25,27 @@ struct LaunchView: View {
                     .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(5)
                 
-                SecureField("Password", text: $passWord)
+                SecureField("Password", text: $password)
                     .padding()
                     .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(5)
                 
                 Button(action: {
-                    print("로그인")
+                    authModel.signIn(email: emailAddress, password: password)
+                    if authModel.user != nil {
+                        mainViewControl = true
+                    } else {
+                        // 로그인 실패 경우
+                        
+                    }
                 }) {
                     Text("Sign In")
                         .tint(Color("textColor"))
                 }
                 .padding()
+                .fullScreenCover(isPresented: $mainViewControl) {
+                    ContentView()
+                }
                 Divider()
                 
                 Button(action: {
