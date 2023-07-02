@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var sideMenuControl = false
+    @State var selectedMenuTab = 0
     var body: some View {
         let drag = DragGesture()
             .onEnded {
@@ -21,13 +22,13 @@ struct ContentView: View {
         return NavigationView {
             GeometryReader{ geometry in
                 ZStack(alignment:.leading) {
-                    MainView(sideMenuControl: self.$sideMenuControl)
+                    MainView(sideMenuControl: self.$sideMenuControl, selectedMenuTab: self.$selectedMenuTab)
                         .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
                         .offset(x:self.sideMenuControl ? geometry.size.width/2 : 0)
                         .disabled(self.sideMenuControl ? true : false)
                     
                     if self.sideMenuControl {
-                        SideMenuView()
+                        SideMenuView(selectedMenuTab: self.$selectedMenuTab, sideMenuControl: self.$sideMenuControl)
                             .frame(width:geometry.size.width/2)
                             .transition(.move(edge: .leading))
                     }
@@ -57,19 +58,29 @@ struct ContentView: View {
                     }
                 }
             ))
-            
         }
-        
         
     }
 }
 
 struct MainView: View {
     @Binding var sideMenuControl : Bool
+    @Binding var selectedMenuTab: Int
     var body: some View {
-        Text("Main View")
+        TabView(selection: $selectedMenuTab) {
+            HomeView(sideMenuControl: $sideMenuControl)
+                .tag(0)
+            MyPageView(sideMenuControl: $sideMenuControl)
+                .tag(1)
+            ContractsView(sideMenuControl: $sideMenuControl)
+                .tag(2)
+            VerificationView(sideMenuControl: $sideMenuControl)
+                .tag(3)
+        }
+        
     }
 }
+
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
