@@ -12,20 +12,22 @@ struct SideMenuView: View {
     @Binding var sideMenuControl:Bool
     var body: some View {
            VStack(alignment: .leading){
-               Button {
-                   selectedMenuTab = 0
-                   sideMenuControl.toggle()
-               }
-               label: {
-                   HStack{
-                       Image(systemName: "b.circle")
-                           .foregroundColor(.gray)
-                           .imageScale(.large)
-                       Text("Home")
-                           .foregroundColor(Color("textColor"))
-                           .font(.headline)
+               HStack {
+                   Button {
+                       selectedMenuTab = 0
+                       sideMenuControl.toggle()
                    }
-                   .padding(.top, 100)
+                   label: {
+                       HStack{
+                           Image(systemName: "b.circle")
+                               .foregroundColor( (selectedMenuTab == 0) ? Color("signatureColor1"): Color.gray)
+                               .imageScale(.large)
+                           Text("Home")
+                               .foregroundColor(Color("textColor"))
+                               .font(.headline)
+                       }
+                       .padding(.top, 100)
+                   }
                }
                Button {
                    selectedMenuTab = 1
@@ -34,7 +36,7 @@ struct SideMenuView: View {
                label: {
                    HStack{
                        Image(systemName: "person")
-                           .foregroundColor(.gray)
+                           .foregroundColor( (selectedMenuTab == 1) ? Color("signatureColor1"): Color.gray)
                            .imageScale(.large)
                        Text("My Page")
                            .foregroundColor(Color("textColor"))
@@ -49,7 +51,7 @@ struct SideMenuView: View {
                label: {
                    HStack{
                        Image(systemName: "doc.plaintext")
-                           .foregroundColor(.gray)
+                           .foregroundColor( (selectedMenuTab == 2) ? Color("signatureColor1"): Color.gray)
                            .imageScale(.large)
                        Text("Contracts")
                            .foregroundColor(Color("textColor"))
@@ -65,7 +67,7 @@ struct SideMenuView: View {
                label: {
                    HStack{
                        Image(systemName: "checkmark.shield.fill")
-                           .foregroundColor(.gray)
+                           .foregroundColor( (selectedMenuTab == 3) ? Color("signatureColor1"): Color.gray)
                            .imageScale(.large)
                        Text("Verification")
                            .foregroundColor(Color("textColor"))

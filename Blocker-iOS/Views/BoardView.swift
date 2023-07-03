@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct BoardView: View {
-    private let values:[boardData] = [boardData(title: "123")]
+    private let values:[boardData] = [boardData(title: "123"), boardData(title: "456"), boardData(title: "789"), boardData(title: "789"), boardData(title: "789")]
     var body: some View {
-        ForEach(values){ item in
-            BoardCellView(title: item.title)
+        VStack {
+            ForEach(values){ item in
+                BoardCellView(title: item.title)
+            }
         }
     }
 }
@@ -23,13 +25,15 @@ struct boardData: Identifiable {
 struct BoardCellView: View {
     @State var title: String
     var body: some View {
-        RoundedRectangle(cornerRadius: 10.0)
-            .fill(Color.blue)
-            .frame(height: 100)
-            .padding()
-        VStack(alignment: .leading) {
-            Text(title)
-                .foregroundColor(Color("textColor"))
+        ZStack {
+            RoundedRectangle(cornerRadius: 10.0)
+                .fill(Color.blue)
+                .frame(height: 100)
+                .padding()
+            VStack(alignment: .leading) {
+                Text(title)
+                    .foregroundColor(Color("textColor"))
+            }
         }
     }
 }

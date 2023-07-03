@@ -10,9 +10,12 @@ import SwiftUI
 struct HomeView: View {
     @Binding var sideMenuControl: Bool
     var body: some View {
-        ImageSliderView()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width*0.6525)
-        Divider()
+        ScrollView {
+            ImageSliderView()
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width*0.6525)
+            Divider()
+            BoardView()
+        }
     }
 }
 
@@ -28,5 +31,14 @@ struct ImageSliderView: View {
                 .tabViewStyle(PageTabViewStyle())
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
             }
+            .onAppear {
+                self.toolbar(.hidden, for: .tabBar)
+            }
+    }
+}
+
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView(sideMenuControl: .constant(false))
     }
 }
