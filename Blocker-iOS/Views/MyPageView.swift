@@ -19,6 +19,8 @@ struct MyPageView: View {
 }
 struct ProfileView: View {
     @State var signViewModalControl: Bool = false
+    let myPost = 1
+    let favorites = 2
     var body: some View {
         VStack {
             VStack {
@@ -29,32 +31,95 @@ struct ProfileView: View {
             VStack(alignment: .leading) {
                 
                 HStack {
-                    Text("Board")
+                    Text("Post")
                     Spacer()
+                }
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10.0)
+                        .fill(Color("backgroundColor"))
+                        .frame(height: 100)
+                        .padding()
+                    HStack(spacing: 8.0) {
+                        VStack {
+                            Text("작성 게시글")
+                            Button("\(myPost)") {
+                                print("작성한 게시글 목록 리스트 업")
+                            }
+                            .padding(.top, 5)
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Text("관심 목록")
+                            Button("\(favorites)") {
+                                print("관심 목록 리스트 업")
+                            }
+                            .padding(.top, 5)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                 }
                 HStack {
                     Text("Contracts")
                     Spacer()
                 }
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10.0)
+                        .fill(Color("backgroundColor"))
+                        .frame(height: 100)
+                        .padding()
+                    HStack(spacing: 8.0) {
+                        VStack {
+                            Text("진행 중 계약서")
+                            Button("\(myPost)") {
+                                print("진행 중인 계약서 상태 목록")
+                            }
+                            .padding(.top, 5)
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Text("체결 계약서")
+                            Button("\(favorites)") {
+                                print("체결된 계약서 상태 목록")
+                            }
+                            .padding(.top, 5)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
                 HStack {
                     Text("Electronioc Signature")
                     Spacer()
                 }
-                Button(action: {signViewModalControl = true} ) {
-                    Text("Sign")
-                }
-                    .sheet(isPresented: $signViewModalControl) {
-                        SignView()
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10.0)
+                        .fill(Color("backgroundColor"))
+                        .frame(height: 100)
+                        .padding()
+                    HStack(spacing: 8.0) {
+                        Button("Check Sign") {
+                            print("기존 서명 이미지 불러오기 ")
+                        }
+                        .frame(maxWidth: .infinity)
+                        Button(action: {signViewModalControl = true} ) {
+                            Text("Resign")
+                        }
+                            .sheet(isPresented: $signViewModalControl) {
+                                SignView()
+                            }
+                            .frame(maxWidth: .infinity)
                     }
+                }
             }
             .padding()
-            Divider()
-            
+            .background(Color("subBackgroundColor"))
+            .cornerRadius(10)
+            .ignoresSafeArea()
         }
         
     }
     
 }
+
 struct ProfileHeaderView: View {
     let width = UIScreen.main.bounds.width / 2
     var body: some View {
@@ -86,13 +151,6 @@ struct ProfileFooterView: View {
                     .font(.body)
                     .foregroundColor(Color("textColor"))
             }
-    }
-}
-struct SignView: View {
-    var body: some View {
-        VStack {
-            Text("전자 서명 확인 및 수정")
-        }
     }
 }
 struct MyPageView_Previews: PreviewProvider {

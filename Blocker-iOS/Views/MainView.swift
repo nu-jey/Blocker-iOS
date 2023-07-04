@@ -70,16 +70,18 @@ struct MainView: View {
         TabView(selection: $selectedMenuTab) {
             HomeView(sideMenuControl: $sideMenuControl)
                 .tag(0)
-            
+                .padding(.top, 20)
             MyPageView(sideMenuControl: $sideMenuControl)
                 .tag(1)
-            
+                .padding(.top, 20)
             ContractsView(sideMenuControl: $sideMenuControl)
                 .tag(2)
-            
+                .padding(.top, 20)
             VerificationView(sideMenuControl: $sideMenuControl)
                 .tag(3)
-        }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100.00)
+                .padding(.top, 20)
+        }
+        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100.00)
     }
 }
 

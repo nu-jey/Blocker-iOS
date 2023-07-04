@@ -12,7 +12,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             ImageSliderView()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width*0.6525)
+                .frame(width: constantData.width, height: constantData.width*0.6525)
             Divider()
             BoardView()
         }

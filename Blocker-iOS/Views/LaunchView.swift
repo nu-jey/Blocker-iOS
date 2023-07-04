@@ -100,7 +100,9 @@ struct SignUpView: View {
                     .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(5)
                     .border(.red, width: (password != passwordConfirm)||(password == "") ? 1 : 0)
+                Text("Electronioc Signature")
             }
+            SignView()
             Divider()
             Button("Sign Up", action: {
                 if isValidEmail(testStr: emailAddress) {
