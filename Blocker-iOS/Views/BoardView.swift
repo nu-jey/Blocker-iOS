@@ -12,7 +12,9 @@ struct BoardView: View {
     var body: some View {
         VStack {
             ForEach(values){ item in
-                BoardCellView(title: item.title)
+                NavigationLink(destination: PostView()) {
+                    BoardCellView(title: item.title)
+                }
             }
         }
     }
