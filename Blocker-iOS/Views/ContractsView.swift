@@ -14,14 +14,31 @@ struct ContractsView: View {
         TabView(selection: $selectedContractTab) {
             ContractListView(contractType: "미체결")
                 .tag(0)
-                .toolbar(.visible, for: .tabBar)
+                .tabItem {
+                    VStack {
+                        Image(systemName: "folder")
+                        Text("Folder")
+                    }
+                }
             ContractListView(contractType: "체결중")
                 .tag(1)
-                .toolbar(.visible, for: .tabBar)
+                .tabItem {
+                    VStack {
+                        Image(systemName: "folder")
+                        Text("Folder")
+                    }
+                }
             ContractListView(contractType: "체결")
                 .tag(2)
-                .toolbar(.visible, for: .tabBar)
+                .tabItem {
+                    VStack {
+                        Image(systemName: "folder")
+                        Text("Folder")
+                    }
+                }
         }
+        .accentColor(Color("signatureColor1"))
+        .padding(.bottom, 20)
     }
 }
 

@@ -121,20 +121,22 @@ struct ProfileView: View {
 }
 
 struct ProfileHeaderView: View {
-    let width = UIScreen.main.bounds.width / 2
     var body: some View {
             ZStack(alignment: .top){
                 Rectangle()
                     .foregroundColor(Color("subBackgroundColor"))
                     .edgesIgnoringSafeArea(.top)
-                    .frame(height: width/2)
-                Image(systemName: "person")
-                    .resizable()
-                    .padding()
-                    .background(Color.gray)
-                    .scaledToFit()
-                    .clipShape(Circle().inset(by: 5))
-                    .frame(width: width)
+                    .frame(height: 70)
+                VStack {
+                    Image(systemName: "person")
+                        .resizable()
+                        .padding()
+                        .background(Color.gray)
+                        .scaledToFit()
+                        .clipShape(Circle().inset(by: 5))
+                        .frame(width: 100)
+                }
+                .padding(.top, 20)
             }
     }
 }
