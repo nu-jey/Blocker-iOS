@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BoardView: View {
-    private let values:[boardData] = [boardData(title: "123"), boardData(title: "456"), boardData(title: "789"), boardData(title: "789"), boardData(title: "789")]
+    private let values:[BoardData] = [BoardData(title: "123"), BoardData(title: "456"), BoardData(title: "789"), BoardData(title: "789"), BoardData(title: "789")]
     var body: some View {
         VStack {
             ForEach(values){ item in
@@ -19,7 +19,7 @@ struct BoardView: View {
         }
     }
 }
-struct boardData: Identifiable {
+struct BoardData: Identifiable {
     let id = UUID()
     let title: String
 }
