@@ -1,15 +1,16 @@
 //
-//  WriteContractView.swift
+//  WritePostView.swift
 //  Blocker-iOS
 //
-//  Created by 오예준 on 2023/07/06.
+//  Created by 오예준 on 2023/07/07.
 //
 
 import SwiftUI
 
-struct WriteContractView: View {
+struct WritePostView: View {
     @State var title:String = ""
     @State var content:String = ""
+    @State var contractTitle:String = "contract"
     var body: some View {
         VStack {
             HStack {
@@ -20,6 +21,17 @@ struct WriteContractView: View {
             }
             .padding()
             Divider()
+            HStack {
+                Button("Load Contract") {
+                    // 미체결 계약서 목록
+                }
+                .padding(.leading, 20)
+                Spacer()
+                Text(contractTitle)
+                    .padding(.trailing, 20)
+                
+            }
+            Divider()
             TextEditor(text: $content)
                 .cornerRadius(10)
                 .font(.body)
@@ -28,19 +40,19 @@ struct WriteContractView: View {
                 .background(Color(uiColor: .secondarySystemBackground))
                 .scrollContentBackground(.hidden)
                 .padding()
-            
             Divider()
             HStack {
                 Button("Save") {
                     // 게시글 저장
                 }
             }
+            
         }
     }
 }
 
-struct WriteContractView_Previews: PreviewProvider {
+struct WritePostView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteContractView()
+        WritePostView()
     }
 }

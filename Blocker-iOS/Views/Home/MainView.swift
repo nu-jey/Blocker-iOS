@@ -82,6 +82,11 @@ struct MainView: View {
                 .padding(.top, 20)
         }
         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100.00)
+        .toolbar {
+            NavigationLink(destination: SearchPostView()) {
+                Image(systemName: "magnifyingglass")
+            }
+        }
     }
 }
 
