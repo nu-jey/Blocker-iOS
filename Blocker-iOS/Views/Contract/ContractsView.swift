@@ -59,7 +59,7 @@ struct ContractListView: View {
                         ContractData(title: "456"),
                     ]
                     ForEach(data) { item in
-                        NavigationLink(destination: ContractView()) {
+                        NavigationLink(destination: NotSignedContract()) {
                             NotSignedContractCell(title: item.title)
                         }
                     }
@@ -72,7 +72,7 @@ struct ContractListView: View {
                         ContractData(title: "456"),
                     ]
                     ForEach(data) { item in
-                        NavigationLink(destination: ContractView()) {
+                        NavigationLink(destination: SigningContractView()) {
                             SigningContractCell(title: item.title)
                         }
                     }
@@ -85,7 +85,7 @@ struct ContractListView: View {
                         ContractData(title: "456"),
                     ]
                     ForEach(data) { item in
-                        NavigationLink(destination: ContractView()) {
+                        NavigationLink(destination: SignedContractView()) {
                             SignedContractCell(title: item.title)
                         }
                     }

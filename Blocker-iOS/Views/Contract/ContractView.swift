@@ -13,16 +13,6 @@ struct ContractView: View {
     }
 }
 
-struct SigningContractView: View {
-    var body: some View {
-        Text("Singing Contract View")
-    }
-}
-struct SignedContractView: View {
-    var body: some View {
-        Text("Singied Contract View")
-    }
-}
 struct ContractView_Previews: PreviewProvider {
     static var previews: some View {
         ContractView()
