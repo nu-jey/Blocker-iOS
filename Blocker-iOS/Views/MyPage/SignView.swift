@@ -50,6 +50,7 @@ struct SignView: View {
         guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
             return false
         }
+        print(directory)
         do {
             try data.write(to: directory.appendingPathComponent("signature.png")!)
             return true

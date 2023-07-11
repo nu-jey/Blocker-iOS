@@ -43,10 +43,61 @@ struct SigningContractView: View {
             .frame(height: 100)
         }
     }
+
 }
 struct ContractorsSignView: View {
     var body: some View {
-        Text("계약 참여자들 서명 뷰 ")
+        ScrollView(.horizontal) {
+            HStack(spacing: 10) {
+                VStack {
+                    Image(uiImage: getSavedImage(named:"signature.png")!)
+                        .resizable()
+                        .frame(width: 150, height: 50)
+                        .cornerRadius(10)
+                    Text("contarctor1")
+                        .foregroundColor(Color("textColor"))
+                }
+                VStack {
+                    Image(uiImage: getSavedImage(named:"signature.png")!)
+                        .resizable()
+                        .frame(width: 150, height: 50)
+                        .cornerRadius(10)
+                    Text("contarctor1")
+                        .foregroundColor(Color("textColor"))
+                }
+                VStack {
+                    Image(uiImage: getSavedImage(named:"signature.png")!)
+                        .resizable()
+                        .frame(width: 150, height: 50)
+                        .cornerRadius(10)
+                    Text("contarctor1")
+                        .foregroundColor(Color("textColor"))
+                }
+                VStack {
+                    Image(uiImage: getSavedImage(named:"signature.png")!)
+                        .resizable()
+                        .frame(width: 150, height: 50)
+                        .cornerRadius(10)
+                    Text("contarctor1")
+                        .foregroundColor(Color("textColor"))
+                }
+            }
+        }
+    }
+    func getSavedImage(named: String) -> UIImage? {
+      if let dir: URL
+        = try? FileManager.default.url(for: .documentDirectory,
+                                       in: .userDomainMask,
+                                       appropriateFor: nil,
+                                       create: false) {
+        let path: String
+          = URL(fileURLWithPath: dir.absoluteString)
+              .appendingPathComponent(named).path
+        let image: UIImage? = UIImage(contentsOfFile: path)
+        
+        return image
+      }
+      return nil
     }
 }
 struct SigningContractView_Previews: PreviewProvider {
