@@ -10,6 +10,8 @@ import SwiftUI
 struct SigningContractView: View {
     @State var title:String = "title"
     @State var content:String = "content"
+    @State var writer:String = "writer"
+    @State var contractors:[String] = ["contractor1", "contractor2", "contractor3", "contractor4" ]
     
     var body: some View {
         VStack {
@@ -21,7 +23,7 @@ struct SigningContractView: View {
                 .font(.body)
             Spacer()
             Divider()
-            ContractorsSignView()
+            //ContractorsSignView()
             Divider()
             HStack {
                 Button("Sign") {

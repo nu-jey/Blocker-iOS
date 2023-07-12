@@ -10,6 +10,7 @@ import SwiftUI
 struct SignedContractView: View {
     @State var title:String = "title"
     @State var content:String = "content"
+    @State var writer:String = "writer"
     
     var body: some View {
         VStack {
@@ -21,11 +22,12 @@ struct SignedContractView: View {
                 .font(.body)
             Spacer()
             Divider()
-            ContractorsSignView()
+            //ContractorsSignView()
             Divider()
             HStack {
                 Button("PDF") {
-                    // 파일 추출
+                    let signedContract = SignedContract(title: title, content: content, writer: writer, contractors: [], signatures: [])
+                    signedContract.convertPDF()
                 }
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)

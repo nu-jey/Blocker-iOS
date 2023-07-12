@@ -34,6 +34,8 @@ struct VerificationView: View {
                         // fileURL을 통해서 파일 접근 후 해쉬 값 추출 -> 서버로 전송
                         self.fileName = fileURL.first?.lastPathComponent ?? "file not available"
                         
+                        let verification = Verification(contractFile: fileURL.first!)
+                        verification.verificate()
                     }
                     catch{
                         print("error reading file \(error.localizedDescription)")

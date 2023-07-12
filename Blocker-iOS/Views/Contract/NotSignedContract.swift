@@ -10,6 +10,7 @@ import SwiftUI
 struct NotSignedContract: View {
     @State var title:String = "title"
     @State var content:String = "content"
+    @State var writer:String = "writer"
     @State var contractorsModalControl:Bool = false
     var body: some View {
         VStack {
