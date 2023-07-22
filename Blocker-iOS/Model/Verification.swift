@@ -30,8 +30,10 @@ class Verification {
             let sha256 = SHA256.hash(data: data!)
             let shaData = sha256.compactMap{String(format: "%02x", $0)}.joined() // 16진법의 결과값으로 변환
             
+            print(shaData)
             // 추출한 해시 값을 매개변수로 검증 API 호출
             // shaData를 기반으로 검증 API 호출
+            
         }
     }
 }

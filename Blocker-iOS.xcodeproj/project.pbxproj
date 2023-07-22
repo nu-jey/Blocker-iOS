@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2233BD62A6B6CCD00A9BA8F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD52A6B6CCD00A9BA8F /* GoogleSignIn */; };
+		C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */; };
+		C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */; };
+		C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDE2A6BF09F00A9BA8F /* UserData.swift */; };
 		C25E2FC42A4EB2E90069A8C0 /* Blocker_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */; };
 		C25E2FC62A4EB2E90069A8C0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E2FC52A4EB2E90069A8C0 /* LaunchView.swift */; };
 		C25E2FC82A4EB2EA0069A8C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */; };
 		C25E2FCB2A4EB2EA0069A8C0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25E2FCA2A4EB2EA0069A8C0 /* Preview Assets.xcassets */; };
 		C25E2FD42A4ECBE50069A8C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C25E2FD32A4ECBE50069A8C0 /* GoogleService-Info.plist */; };
-		C25E2FDA2A4EF9F00069A8C0 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E2FD92A4EF9F00069A8C0 /* AuthModel.swift */; };
 		C25E30142A4F0FFB0069A8C0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C25E30132A4F0FFB0069A8C0 /* FirebaseAuth */; };
 		C26D47282A54137400137380 /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D47272A54137400137380 /* SignView.swift */; };
 		C26D472A2A5425AF00137380 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D47292A5425AF00137380 /* Constant.swift */; };
@@ -36,13 +39,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C2233BDB2A6BB7F500A9BA8F /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
+		C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+		C2233BDE2A6BF09F00A9BA8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		C25E2FC02A4EB2E90069A8C0 /* Blocker-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blocker-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocker_iOSApp.swift; sourceTree = "<group>"; };
 		C25E2FC52A4EB2E90069A8C0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C25E2FCA2A4EB2EA0069A8C0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C25E2FD32A4ECBE50069A8C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C25E2FD92A4EF9F00069A8C0 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		C26D47272A54137400137380 /* SignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignView.swift; sourceTree = "<group>"; };
 		C26D47292A5425AF00137380 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		C27475462A50222700610385 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -69,13 +74,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */,
 				C25E30142A4F0FFB0069A8C0 /* FirebaseAuth in Frameworks */,
+				C2233BD62A6B6CCD00A9BA8F /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C2233BD32A6B6C6B00A9BA8F /* VoewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */,
+			);
+			name = VoewModel;
+			sourceTree = "<group>";
+		};
 		C25E2FB72A4EB2E90069A8C0 = {
 			isa = PBXGroup;
 			children = (
@@ -95,8 +110,10 @@
 		C25E2FC22A4EB2E90069A8C0 /* Blocker-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				C2233BDB2A6BB7F500A9BA8F /* info.plist */,
 				C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */,
 				C2E509172A5DCD91006D0187 /* Model */,
+				C2233BD32A6B6C6B00A9BA8F /* VoewModel */,
 				C27475452A501ACC00610385 /* Views */,
 				C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */,
 				C25E2FD32A4ECBE50069A8C0 /* GoogleService-Info.plist */,
@@ -189,9 +206,9 @@
 		C2E509172A5DCD91006D0187 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C25E2FD92A4EF9F00069A8C0 /* AuthModel.swift */,
 				C279A1222A5EC1D7009F5209 /* Contract */,
 				C279A1232A5ECE72009F5209 /* Verification.swift */,
+				C2233BDE2A6BF09F00A9BA8F /* UserData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -214,6 +231,8 @@
 			name = "Blocker-iOS";
 			packageProductDependencies = (
 				C25E30132A4F0FFB0069A8C0 /* FirebaseAuth */,
+				C2233BD52A6B6CCD00A9BA8F /* GoogleSignIn */,
+				C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */,
 			);
 			productName = "Blocker-iOS";
 			productReference = C25E2FC02A4EB2E90069A8C0 /* Blocker-iOS.app */;
@@ -245,6 +264,7 @@
 			mainGroup = C25E2FB72A4EB2E90069A8C0;
 			packageReferences = (
 				C25E30122A4F0FFB0069A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C2233BD42A6B6CCD00A9BA8F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = C25E2FC12A4EB2E90069A8C0 /* Products */;
 			projectDirPath = "";
@@ -282,9 +302,10 @@
 				C2930DF32A517B43002E06AA /* ContractsView.swift in Sources */,
 				C27475492A504D9000610385 /* SideMenuView.swift in Sources */,
 				C25E2FC42A4EB2E90069A8C0 /* Blocker_iOSApp.swift in Sources */,
-				C25E2FDA2A4EF9F00069A8C0 /* AuthModel.swift in Sources */,
+				C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */,
 				C2F5536A2A5585FC00438D48 /* ContractView.swift in Sources */,
 				C2930DF92A519A54002E06AA /* BoardView.swift in Sources */,
+				C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */,
 				C2E1CBD62A59870C0005CA4C /* NotSignedContract.swift in Sources */,
 				C2930DF12A517B30002E06AA /* MyPageView.swift in Sources */,
 				C2E1CBD82A598D4D0005CA4C /* SigningContractView.swift in Sources */,
@@ -426,6 +447,8 @@
 				DEVELOPMENT_TEAM = ULF3FT8T5G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "/Users/oyejun/Desktop/iOS/Blocker-iOS/Blocker-iOS/info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -455,6 +478,8 @@
 				DEVELOPMENT_TEAM = ULF3FT8T5G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "/Users/oyejun/Desktop/iOS/Blocker-iOS/Blocker-iOS/info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -497,6 +522,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C2233BD42A6B6CCD00A9BA8F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		C25E30122A4F0FFB0069A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -508,6 +541,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C2233BD52A6B6CCD00A9BA8F /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2233BD42A6B6CCD00A9BA8F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2233BD42A6B6CCD00A9BA8F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		C25E30132A4F0FFB0069A8C0 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C25E30122A4F0FFB0069A8C0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
