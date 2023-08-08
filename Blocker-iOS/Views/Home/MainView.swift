@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import GoogleSignIn
 
 struct ContentView: View {
     @State var sideMenuControl = false
     @State var selectedMenuTab = 0
+    @EnvironmentObject var laucnViewModel:LaunchViewModel
     var body: some View {
         let drag = DragGesture()
             .onEnded {
@@ -19,47 +21,52 @@ struct ContentView: View {
                     }
                 }
             }
-        return NavigationView {
-            GeometryReader{ geometry in
-                ZStack(alignment:.leading) {
-                    MainView(sideMenuControl: self.$sideMenuControl, selectedMenuTab: self.$selectedMenuTab)
-                        .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
-                        .offset(x:self.sideMenuControl ? geometry.size.width/2 : 0)
-                        .disabled(self.sideMenuControl ? true : false)
-                    
-                    if self.sideMenuControl {
-                        SideMenuView(selectedMenuTab: self.$selectedMenuTab, sideMenuControl: self.$sideMenuControl)
-                            .frame(width:geometry.size.width/2)
-                            .transition(.move(edge: .leading))
-                    }
+        switch laucnViewModel.state {
+        case .signedOut: LaunchView(launchViewModel: laucnViewModel)
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
                 }
-                .gesture(drag)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    if !sideMenuControl {
-                        Text("Blocker")
-                            .font(.headline)
-                            .foregroundColor(Color("textColor"))
-                    }
-                }
-            }
-            .navigationBarItems(leading: (
-                HStack{
-                    Button(action: {
-                        withAnimation {
-                            self.sideMenuControl.toggle()
+        case .signedIn: NavigationView {
+                GeometryReader{ geometry in
+                    ZStack(alignment:.leading) {
+                        MainView(sideMenuControl: self.$sideMenuControl, selectedMenuTab: self.$selectedMenuTab)
+                            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
+                            .offset(x:self.sideMenuControl ? geometry.size.width/2 : 0)
+                            .disabled(self.sideMenuControl ? true : false)
+                        
+                        if self.sideMenuControl {
+                            SideMenuView(selectedMenuTab: self.$selectedMenuTab, sideMenuControl: self.$sideMenuControl)
+                                .frame(width:geometry.size.width/2)
+                                .transition(.move(edge: .leading))
                         }
-                    })
-                    {
-                        Image(systemName: "line.horizontal.3")
-                            .imageScale(.large)
+                    }
+                    .gesture(drag)
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        if !sideMenuControl {
+                            Text("Blocker")
+                                .font(.headline)
+                                .foregroundColor(Color("textColor"))
+                        }
                     }
                 }
-            ))
+                .navigationBarItems(leading: (
+                    HStack{
+                        Button(action: {
+                            withAnimation {
+                                self.sideMenuControl.toggle()
+                            }
+                        })
+                        {
+                            Image(systemName: "line.horizontal.3")
+                                .imageScale(.large)
+                        }
+                    }
+                ))
+            }
         }
-        
     }
 }
 

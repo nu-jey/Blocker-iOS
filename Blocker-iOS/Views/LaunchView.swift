@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import GoogleSignInSwift
 
 struct LaunchView: View {
     @State var modalControl: Bool = false
     @State var emailAddress: String = ""
     @State var password: String = ""
     let logoSize = UIScreen.main.bounds.width * 0.5
-    @StateObject var launchViewModel = LaunchViewModel()
+    @StateObject var launchViewModel:LaunchViewModel
 
     var body: some View {
         NavigationStack {
@@ -22,26 +23,11 @@ struct LaunchView: View {
                     .frame(width: logoSize, height: logoSize)
                 VStack{
                     Divider()
-                    Button(action: {
+                    GoogleSignInButton {
                         launchViewModel.googleLogin()
-                    }) {
-                        Text("Sign in with Google")
-                            .tint(Color("textColor"))
                     }
-                    .padding()
                     .fullScreenCover(isPresented: $launchViewModel.isLogined) {
                         ContentView()
-                    }
-                    Divider()
-                    Button(action: {
-                        launchViewModel.googleSignUp()
-                    }) {
-                        Text("Sign up with Google")
-                            .tint(Color("textColor"))
-                    }
-                    .padding()
-                    .sheet(isPresented: $launchViewModel.isSignUp) {
-                        SignUpView()
                     }
                     Divider()
                 }
@@ -79,7 +65,6 @@ struct SignUpView: View {
             } message: {
                 Text("회원가입이 완료되었습니다.")
             }
-            
         }
         .padding()
     }
@@ -87,6 +72,6 @@ struct SignUpView: View {
 
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchView()
+        LaunchView(launchViewModel: LaunchViewModel())
     }
 }

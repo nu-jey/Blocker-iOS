@@ -11,11 +11,17 @@ import GoogleSignIn
 
 class LaunchViewModel: ObservableObject {
     // 로그인 상태
+    enum SignInState {
+      case signedIn
+      case signedOut
+    }
+    @Published var state: SignInState = .signedOut
     @Published var isLogined = false
     @Published var userData:UserData = UserData(url: nil, name: "", email: "")
     @Published var isAlert = false
     @Published var isSignUp = false
     private var idToken:String = ""
+    
     func checkState() {
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if error != nil || user == nil {
@@ -30,6 +36,7 @@ class LaunchViewModel: ObservableObject {
             }
         }
     }
+    
     func googleLogin() {
         // rootViewController
         guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else { return }
@@ -44,14 +51,16 @@ class LaunchViewModel: ObservableObject {
             let data = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
             self.userData = data
             self.idToken = result.user.idToken!.tokenString
-            
         }
         
         // 로그인 API 호출 -> IdToken 이용
         
-        // API 호출 반환값이 로그인 성공이라면
-        self.isLogined = true
+        // API 호출 -> 반환값에 따른 분기 처리
+        // 200 -> 로그인
+        // 201 -> 전자 서명 작성 뷰로 이동
         
+        // self.isLogined = true
+        self.state = .signedIn
     }
     
     func googleSignUp() {
@@ -68,8 +77,10 @@ class LaunchViewModel: ObservableObject {
             let data = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
             self.userData = data
             self.idToken = result.user.idToken!.tokenString
-            self.isSignUp = true // 전자 서명 작성을 위해 
+            self.isSignUp = true // 전자 서명 작성을 위해
         }
-        
+    }
+    func signOut() {
+        self.state = .signedOut
     }
 }

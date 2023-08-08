@@ -10,12 +10,11 @@ import GoogleSignIn
 
 @main
 struct Blocker_iOSApp: App {
+    @StateObject var laucnViewModel = LaunchViewModel()
     var body: some Scene {
         WindowGroup {
-            LaunchView()
-                .onOpenURL { url in
-                    GIDSignIn.sharedInstance.handle(url)
-                }
+            ContentView()
+                .environmentObject(laucnViewModel)
         }
     }
 }
