@@ -30,6 +30,9 @@ struct LaunchView: View {
                         ContentView()
                     }
                     Divider()
+                    Button("Refresh") {
+                        launchViewModel.refresh()
+                    }
                 }
             }
             .padding()

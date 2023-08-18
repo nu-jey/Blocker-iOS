@@ -11,6 +11,8 @@
 		C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */; };
 		C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */; };
 		C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDE2A6BF09F00A9BA8F /* UserData.swift */; };
+		C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23C39E32A8F9170003D5D93 /* BlockerSever.swift */; };
+		C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */; };
 		C25E2FC42A4EB2E90069A8C0 /* Blocker_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */; };
 		C25E2FC62A4EB2E90069A8C0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E2FC52A4EB2E90069A8C0 /* LaunchView.swift */; };
 		C25E2FC82A4EB2EA0069A8C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 		C2233BDB2A6BB7F500A9BA8F /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		C2233BDE2A6BF09F00A9BA8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		C23C39E32A8F9170003D5D93 /* BlockerSever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerSever.swift; sourceTree = "<group>"; };
+		C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerResponseData.swift; sourceTree = "<group>"; };
 		C25E2FC02A4EB2E90069A8C0 /* Blocker-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blocker-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocker_iOSApp.swift; sourceTree = "<group>"; };
 		C25E2FC52A4EB2E90069A8C0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
@@ -83,12 +87,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C2233BD32A6B6C6B00A9BA8F /* VoewModel */ = {
+		C2233BD32A6B6C6B00A9BA8F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */,
 			);
-			name = VoewModel;
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		C25E2FB72A4EB2E90069A8C0 = {
@@ -113,7 +117,7 @@
 				C2233BDB2A6BB7F500A9BA8F /* info.plist */,
 				C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */,
 				C2E509172A5DCD91006D0187 /* Model */,
-				C2233BD32A6B6C6B00A9BA8F /* VoewModel */,
+				C2233BD32A6B6C6B00A9BA8F /* ViewModel */,
 				C27475452A501ACC00610385 /* Views */,
 				C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */,
 				C25E2FD32A4ECBE50069A8C0 /* GoogleService-Info.plist */,
@@ -209,6 +213,8 @@
 				C279A1222A5EC1D7009F5209 /* Contract */,
 				C279A1232A5ECE72009F5209 /* Verification.swift */,
 				C2233BDE2A6BF09F00A9BA8F /* UserData.swift */,
+				C23C39E32A8F9170003D5D93 /* BlockerSever.swift */,
+				C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -299,6 +305,7 @@
 				C2C54B632A58114B006A6082 /* WritePostView.swift in Sources */,
 				C27475472A50222700610385 /* MainView.swift in Sources */,
 				C26D47282A54137400137380 /* SignView.swift in Sources */,
+				C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */,
 				C2930DF32A517B43002E06AA /* ContractsView.swift in Sources */,
 				C27475492A504D9000610385 /* SideMenuView.swift in Sources */,
 				C25E2FC42A4EB2E90069A8C0 /* Blocker_iOSApp.swift in Sources */,
@@ -313,6 +320,7 @@
 				C279A1242A5ECE72009F5209 /* Verification.swift in Sources */,
 				C279A1212A5EC1CA009F5209 /* SignedContract.swift in Sources */,
 				C2F553682A557C9F00438D48 /* PostView.swift in Sources */,
+				C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */,
 				C26D472A2A5425AF00137380 /* Constant.swift in Sources */,
 				C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */,
 				C2C54B672A583879006A6082 /* SearchPostView.swift in Sources */,

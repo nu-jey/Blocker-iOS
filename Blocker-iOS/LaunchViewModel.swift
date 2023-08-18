@@ -15,6 +15,7 @@ class LaunchViewModel: ObservableObject {
       case signedIn
       case signedOut
     }
+    
     @Published var state: SignInState = .signedOut
     @Published var isLogined = false
     @Published var userData:UserData = UserData(url: nil, name: "", email: "")
@@ -51,16 +52,8 @@ class LaunchViewModel: ObservableObject {
             let data = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
             self.userData = data
             self.idToken = result.user.idToken!.tokenString
+            BlockerServer.shared.login(self.userData)
         }
-        
-        // 로그인 API 호출 -> IdToken 이용
-        
-        // API 호출 -> 반환값에 따른 분기 처리
-        // 200 -> 로그인
-        // 201 -> 전자 서명 작성 뷰로 이동
-        
-        // self.isLogined = true
-        self.state = .signedIn
     }
     
     func googleSignUp() {
@@ -82,5 +75,23 @@ class LaunchViewModel: ObservableObject {
     }
     func signOut() {
         self.state = .signedOut
+    }
+    
+    func refresh() {
+        var request = URLRequest(url: URL(string: "http://13.209.237.234/users/reissue-token")!)
+        request.httpMethod = "Get"
+        // header -> ㄱefreshToken 값만 보내는 걸로(세미콜론 빼고)
+        request.setValue("refreshToken=eyJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6IjJlZDQ2NmJmNDRiMzQ0MDQ5Y2JlZWYxYzA3Njk4OThmIiwiaWF0IjoxNjkyMzM1Nzc5LCJleHAiOjE2OTM1NDUzNzl9.a_054Dtg1AIJAuDKEnjCkBQVNC6c5OeYRNHlvM1xw_I", forHTTPHeaderField: "Cookie")
+        
+        // API 호출 -> 반환값에 따른 분기 처리
+        let approvalTask = URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            print(response)
+        }
+        approvalTask.resume()
     }
 }
