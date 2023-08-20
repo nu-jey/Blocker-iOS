@@ -66,6 +66,8 @@ struct ContentView: View {
                     }
                 ))
             }
+        case .signautreNeeded:
+            SignView()
         }
     }
 }

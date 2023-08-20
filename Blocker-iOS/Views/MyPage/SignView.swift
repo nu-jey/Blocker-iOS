@@ -9,9 +9,9 @@ import SwiftUI
 import PencilKit
 
 struct SignView: View {
-    
     @Environment(\.undoManager) private var undoManager
     @State private var canvasView = PKCanvasView()
+    var launchViewModel:LaunchViewModel?
     
     var body: some View {
         VStack {
@@ -51,6 +51,11 @@ struct SignView: View {
             return false
         }
         print(directory)
+        BlockerServer.shared.UpdateSignature(image) { state in
+            if state {
+                
+            }
+        }
         do {
             try data.write(to: directory.appendingPathComponent("signature.png")!)
             return true

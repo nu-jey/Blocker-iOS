@@ -14,8 +14,10 @@ class LaunchViewModel: ObservableObject {
     enum SignInState {
       case signedIn
       case signedOut
+      case signautreNeeded
     }
     
+    //@Published var state: SignInState = .signedOut
     @Published var state: SignInState = .signedOut
     @Published var isLogined = false
     @Published var userData:UserData = UserData(url: nil, name: "", email: "")
@@ -51,8 +53,15 @@ class LaunchViewModel: ObservableObject {
             guard let profile = result.user.profile else { return }
             let data = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
             self.userData = data
+            BlockerServer.shared.setUserData(data)
             self.idToken = result.user.idToken!.tokenString
-            BlockerServer.shared.login(self.userData)
+            BlockerServer.shared.login(self.userData) { (state) in
+                if state {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.state = .signautreNeeded
+                    }
+                }
+            }
         }
     }
     
@@ -73,6 +82,7 @@ class LaunchViewModel: ObservableObject {
             self.isSignUp = true // 전자 서명 작성을 위해
         }
     }
+    
     func signOut() {
         self.state = .signedOut
     }
