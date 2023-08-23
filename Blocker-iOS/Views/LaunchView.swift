@@ -29,10 +29,6 @@ struct LaunchView: View {
                     .fullScreenCover(isPresented: $launchViewModel.isLogined) {
                         ContentView()
                     }
-                    Divider()
-                    Button("Refresh") {
-                        launchViewModel.refresh()
-                    }
                 }
             }
             .padding()
@@ -47,31 +43,32 @@ struct LaunchView: View {
         
 }
 
-struct SignUpView: View {
-    @Environment(\.presentationMode) var presentation
-    @State var signUpAlertControl: Bool = false
-    @Environment(\.dismiss) private var dismiss
-    var signView = SignView()
-    var body: some View {
-        VStack {
-            signView
-            Divider()
-            Button("Sign Up", action: {
-                // 구글 계정 + 작성된 전자서명으로 회원 가입 진행 
-            })
-            .alert("회원가입", isPresented: $signUpAlertControl) {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("OK")
-                }
-            } message: {
-                Text("회원가입이 완료되었습니다.")
-            }
-        }
-        .padding()
-    }
-}
+//struct SignUpView: View {
+//    @Environment(\.presentationMode) var presentation
+//    @State var signUpAlertControl: Bool = false
+//    @Environment(\.dismiss) private var dismiss
+//    @StateObject var launchViewModel:LaunchViewModel
+//    var signView = SignView()
+//    var body: some View {
+//        VStack {
+//            signView
+//            Divider()
+//            Button("Sign Up", action: {
+//                // 구글 계정 + 작성된 전자서명으로 회원 가입 진행 
+//            })
+//            .alert("회원가입", isPresented: $signUpAlertControl) {
+//                Button {
+//                    dismiss()
+//                } label: {
+//                    Text("OK")
+//                }
+//            } message: {
+//                Text("회원가입이 완료되었습니다.")
+//            }
+//        }
+//        .padding()
+//    }
+//}
 
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {

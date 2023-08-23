@@ -104,7 +104,7 @@ struct ProfileView: View {
                             Text("Resign")
                         }
                             .sheet(isPresented: $signViewModalControl) {
-                                SignView()
+                                // SignView(launchViewModel: <#LaunchViewModel#>)
                             }
                             .frame(maxWidth: .infinity)
                     }

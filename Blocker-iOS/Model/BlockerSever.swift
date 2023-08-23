@@ -9,11 +9,12 @@ import Foundation
 import UIKit
 
 class BlockerServer {
+    private var userSignInState:SignInState = .signedOut
     private var refreshToken:String = ""
     private var accessToken:String = ""
     private var userData:UserData = UserData(url: nil, name: "", email: "")
-    private let host:String = ""
     static let shared = BlockerServer()
+    private let host:String = ""
     
     func setUserData(_ inputData: UserData) {
         self.userData = inputData
@@ -28,7 +29,7 @@ class BlockerServer {
         }
     }
     
-    func reissueToken() {
+    func reissueToken(completionHandler: @escaping (Bool, Int) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/users/reissue-token")!)
         request.httpMethod = "Get"
         // header
@@ -45,10 +46,13 @@ class BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     // 200 -> 토큰 재발급 성공
+                    completionHandler(true, 200)
                 } else if response.statusCode == 401 {
                     // 401 -> 리프레쉬 토큰 만료, 재로그인 시도 해야함
-                } else {
-                    
+                    self.userSignInState = .signedOut
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
                 }
             }
         }.resume()
@@ -63,7 +67,7 @@ class BlockerServer {
         return res
     }
     
-    func login(_ user: UserData, completionHandler: @escaping (Bool) -> Void) {
+    func login(_ user: UserData, completionHandler: @escaping (Bool, Int) -> Void) {
         // 구글 로그인 통해서 얻은 profile 정보로 로그인 시도
         var request = URLRequest(url: URL(string: "\(self.host)/users/login")!)
         request.httpMethod = "Post"
@@ -93,20 +97,28 @@ class BlockerServer {
             
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
+                print(response)
                 if response.statusCode == 200 {
                     // 200 -> 로그인
                     let refreshToken = self.convertRefreshToken(response.value(forHTTPHeaderField: "Cookie")!)
                     let accessToken = response.value(forHTTPHeaderField: "Authorization")!
                     self.setToken(refreshToken, accessToken)
-                    print(accessToken)
-                    completionHandler(true)
+                    completionHandler(true, 200)
                 } else if response.statusCode == 201 {
                     // 201 -> 전자 서명 작성 뷰로 이동
                     // 전자 서명 작성 후 전자 서명 등록 API 호출해서 회원가입 진행
+                    completionHandler(true, 201)
                     return
                 }
             }
         }.resume()
+    }
+    
+    func signOut() {
+        self.userData = UserData(url: nil, name: "", email: "")
+        self.userSignInState = .signedOut
+        self.refreshToken = ""
+        self.accessToken = ""
     }
     
     func convertFileData(fieldName: String, fileName: String, mimeType: String, fileData: Data, using boundary: String) -> Data {
@@ -122,9 +134,9 @@ class BlockerServer {
     }
 
     
-    func UpdateSignature(_ image: UIImage, completionHandler: @escaping (Bool) -> Void) {
+    func updateSignature(_ image: UIImage, completionHandler: @escaping (Bool, Int) -> Void) {
         let boundary = "Boundary-\(UUID().uuidString)"
-        var request = URLRequest(url: URL(string: "\(self.host)/users/signature")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/signatures")!)
         request.httpMethod = "Post"
 
         // header
@@ -152,24 +164,20 @@ class BlockerServer {
             if let response = response as? HTTPURLResponse {
                 print(response)
                 if response.statusCode == 200 {
-                    completionHandler(true)
-                } else if response.statusCode == 401 {
-                    
-                } else if response.statusCode == 403 {
-
-                } else if response.statusCode == 500 {
-
+                    completionHandler(true, 200)
+                } else if response.statusCode == 200 { // 파일 안 보냄
+                    completionHandler(false, 204)
+                } else if response.statusCode == 401 { // 토큰 만료
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 { // 전자서명 저장 실패
+                    completionHandler(false, 403)
+                } else if response.statusCode == 500 { // INTERNAL SERVER ERROR
+                    completionHandler(false, 500)
                 }
             }
 
         }.resume()
     }
-}
-
-extension NSMutableData {
-  func appendString(_ string: String) {
-    if let data = string.data(using: .utf8) {
-      self.append(data)
-    }
-  }
+    
+    
 }

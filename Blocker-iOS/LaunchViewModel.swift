@@ -10,19 +10,11 @@ import GoogleSignInSwift
 import GoogleSignIn
 
 class LaunchViewModel: ObservableObject {
-    // 로그인 상태
-    enum SignInState {
-      case signedIn
-      case signedOut
-      case signautreNeeded
-    }
-    
-    //@Published var state: SignInState = .signedOut
     @Published var state: SignInState = .signedOut
-    @Published var isLogined = false
     @Published var userData:UserData = UserData(url: nil, name: "", email: "")
     @Published var isAlert = false
     @Published var isSignUp = false
+    @Published var isLogined = false
     private var idToken:String = ""
     
     func checkState() {
@@ -35,7 +27,6 @@ class LaunchViewModel: ObservableObject {
                 guard let profile = user?.profile else { return }
                 let data = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
                 self.userData = data
-                self.isLogined = true
             }
         }
     }
@@ -55,10 +46,18 @@ class LaunchViewModel: ObservableObject {
             self.userData = data
             BlockerServer.shared.setUserData(data)
             self.idToken = result.user.idToken!.tokenString
-            BlockerServer.shared.login(self.userData) { (state) in
+            BlockerServer.shared.login(self.userData) { (state, statusCode) in
                 if state {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.state = .signautreNeeded
+                    print(statusCode)
+                    if statusCode == 200 {
+                        DispatchQueue.main.async { [weak self] in
+                            //self?.state = .signedIn
+                            self?.state = .signautreNeeded
+                        }
+                    } else if statusCode == 201 {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.state = .signautreNeeded
+                        }
                     }
                 }
             }
@@ -84,24 +83,10 @@ class LaunchViewModel: ObservableObject {
     }
     
     func signOut() {
+        BlockerServer.shared.signOut()
         self.state = .signedOut
+        self.isLogined = false
     }
     
-    func refresh() {
-        var request = URLRequest(url: URL(string: "http://13.209.237.234/users/reissue-token")!)
-        request.httpMethod = "Get"
-        // header -> ㄱefreshToken 값만 보내는 걸로(세미콜론 빼고)
-        request.setValue("refreshToken=eyJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6IjJlZDQ2NmJmNDRiMzQ0MDQ5Y2JlZWYxYzA3Njk4OThmIiwiaWF0IjoxNjkyMzM1Nzc5LCJleHAiOjE2OTM1NDUzNzl9.a_054Dtg1AIJAuDKEnjCkBQVNC6c5OeYRNHlvM1xw_I", forHTTPHeaderField: "Cookie")
-        
-        // API 호출 -> 반환값에 따른 분기 처리
-        let approvalTask = URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
-            // error 체크
-            if let e = error {
-                print(e.localizedDescription)
-                return
-            }
-            print(response)
-        }
-        approvalTask.resume()
-    }
+    
 }

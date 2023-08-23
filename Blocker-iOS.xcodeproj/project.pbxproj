@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2092B192A94F6F600F8DEBE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2092B182A94F6F600F8DEBE /* Utils.swift */; };
 		C2233BD62A6B6CCD00A9BA8F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD52A6B6CCD00A9BA8F /* GoogleSignIn */; };
 		C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */; };
 		C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */; };
@@ -38,9 +39,11 @@
 		C2E1CBDA2A598D690005CA4C /* SignedContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1CBD92A598D690005CA4C /* SignedContractView.swift */; };
 		C2F553682A557C9F00438D48 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F553672A557C9F00438D48 /* PostView.swift */; };
 		C2F5536A2A5585FC00438D48 /* ContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F553692A5585FC00438D48 /* ContractView.swift */; };
+		C2FB20542A961C3F00CB7A3B /* SignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FB20532A961C3F00CB7A3B /* SignViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C2092B182A94F6F600F8DEBE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		C2233BDB2A6BB7F500A9BA8F /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		C2233BDE2A6BF09F00A9BA8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		C2E1CBD92A598D690005CA4C /* SignedContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedContractView.swift; sourceTree = "<group>"; };
 		C2F553672A557C9F00438D48 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		C2F553692A5585FC00438D48 /* ContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractView.swift; sourceTree = "<group>"; };
+		C2FB20532A961C3F00CB7A3B /* SignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,10 +91,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C2092B1A2A94F6FB00F8DEBE /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				C26D47292A5425AF00137380 /* Constant.swift */,
+				C2092B182A94F6F600F8DEBE /* Utils.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		C2233BD32A6B6C6B00A9BA8F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */,
+				C2FB20532A961C3F00CB7A3B /* SignViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -119,10 +133,10 @@
 				C2E509172A5DCD91006D0187 /* Model */,
 				C2233BD32A6B6C6B00A9BA8F /* ViewModel */,
 				C27475452A501ACC00610385 /* Views */,
+				C2092B1A2A94F6FB00F8DEBE /* Util */,
 				C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */,
 				C25E2FD32A4ECBE50069A8C0 /* GoogleService-Info.plist */,
 				C25E2FC92A4EB2EA0069A8C0 /* Preview Content */,
-				C26D47292A5425AF00137380 /* Constant.swift */,
 			);
 			path = "Blocker-iOS";
 			sourceTree = "<group>";
@@ -304,6 +318,7 @@
 				C2E1CBDA2A598D690005CA4C /* SignedContractView.swift in Sources */,
 				C2C54B632A58114B006A6082 /* WritePostView.swift in Sources */,
 				C27475472A50222700610385 /* MainView.swift in Sources */,
+				C2092B192A94F6F600F8DEBE /* Utils.swift in Sources */,
 				C26D47282A54137400137380 /* SignView.swift in Sources */,
 				C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */,
 				C2930DF32A517B43002E06AA /* ContractsView.swift in Sources */,
@@ -313,6 +328,7 @@
 				C2F5536A2A5585FC00438D48 /* ContractView.swift in Sources */,
 				C2930DF92A519A54002E06AA /* BoardView.swift in Sources */,
 				C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */,
+				C2FB20542A961C3F00CB7A3B /* SignViewModel.swift in Sources */,
 				C2E1CBD62A59870C0005CA4C /* NotSignedContract.swift in Sources */,
 				C2930DF12A517B30002E06AA /* MyPageView.swift in Sources */,
 				C2E1CBD82A598D4D0005CA4C /* SigningContractView.swift in Sources */,
