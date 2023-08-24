@@ -10,6 +10,7 @@ import SwiftUI
 struct SideMenuView: View {
     @Binding var selectedMenuTab:Int
     @Binding var sideMenuControl:Bool
+    @EnvironmentObject var laucnViewModel:LaunchViewModel
     var body: some View {
             VStack(alignment: .leading){
                 HStack {
@@ -100,6 +101,7 @@ struct SideMenuView: View {
             
             Button("Logout") {
                 print("log out")
+                laucnViewModel.signOut()
             }
             .padding(.top, 100)
     }

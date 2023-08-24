@@ -14,7 +14,6 @@ struct LaunchView: View {
     @State var password: String = ""
     let logoSize = UIScreen.main.bounds.width * 0.5
     @StateObject var launchViewModel:LaunchViewModel
-
     var body: some View {
         NavigationStack {
             VStack {
@@ -28,6 +27,9 @@ struct LaunchView: View {
                     }
                     .fullScreenCover(isPresented: $launchViewModel.isLogined) {
                         ContentView()
+                    }
+                    Button("lgo") {
+                        launchViewModel.state = .signautreNeeded
                     }
                 }
             }

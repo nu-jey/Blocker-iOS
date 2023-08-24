@@ -37,6 +37,11 @@ struct BoardCellView: View {
                     .foregroundColor(Color("textColor"))
             }
         }
+        .onAppear {
+            BlockerServer.shared.getBoardData(4, 0) { state, code in
+                
+            }
+        }
     }
 }
 

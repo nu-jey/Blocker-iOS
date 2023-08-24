@@ -48,11 +48,9 @@ class LaunchViewModel: ObservableObject {
             self.idToken = result.user.idToken!.tokenString
             BlockerServer.shared.login(self.userData) { (state, statusCode) in
                 if state {
-                    print(statusCode)
                     if statusCode == 200 {
                         DispatchQueue.main.async { [weak self] in
-                            //self?.state = .signedIn
-                            self?.state = .signautreNeeded
+                            self?.state = .signedIn
                         }
                     } else if statusCode == 201 {
                         DispatchQueue.main.async { [weak self] in

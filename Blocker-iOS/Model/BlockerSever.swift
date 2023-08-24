@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class BlockerServer {
-    private var userSignInState:SignInState = .signedOut
+    var userSignInState:SignInState = .signedOut
     private var refreshToken:String = ""
     private var accessToken:String = ""
     private var userData:UserData = UserData(url: nil, name: "", email: "")
@@ -97,7 +97,6 @@ class BlockerServer {
             
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
                 if response.statusCode == 200 {
                     // 200 -> 로그인
                     let refreshToken = self.convertRefreshToken(response.value(forHTTPHeaderField: "Cookie")!)
@@ -162,7 +161,6 @@ class BlockerServer {
 
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
                 if response.statusCode == 200 {
                     completionHandler(true, 200)
                 } else if response.statusCode == 200 { // 파일 안 보냄
@@ -179,5 +177,32 @@ class BlockerServer {
         }.resume()
     }
     
-    
+    func getBoardData(_ size: Int, _ page: Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards?size=\(size)&page=\(page)")!)
+        request.httpMethod = "Get"
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
+            print(response)
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let resultString = String(data: data!, encoding: .utf8) ?? ""
+                    print(resultString)
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
 }

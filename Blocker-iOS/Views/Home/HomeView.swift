@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeView: View {
     @Binding var sideMenuControl: Bool
     var body: some View {
-        
         ZStack(alignment: .bottomTrailing) {
             Rectangle()
                 .foregroundColor(.clear)

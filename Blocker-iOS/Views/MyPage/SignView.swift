@@ -25,13 +25,14 @@ struct SignView: View {
                 .background(Color.red)
                 Spacer()
                 Button("Save") {
-                    let res = saveSignatureImage()
-                    if res {
-                        print("전자 서명 저장 성공")
-                        self.launchViewModel.state = .signedIn
-                    } else {
-                        print("전자 서명 저장 오류 발생")
-                    }
+//                    let res = saveSignatureImage()
+//                    if res {
+//                        print("전자 서명 저장 성공")
+//                        self.launchViewModel.state = .signedIn
+//                    } else {
+//                        print("전자 서명 저장 오류 발생")
+//                    }
+                    self.launchViewModel.state = .signedIn
                 }
                 .frame(width: 140)
                 .background(Color.yellow)
