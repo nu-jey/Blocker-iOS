@@ -28,7 +28,10 @@ class BlockerServer {
             self.accessToken = accessToken!
         }
     }
-    
+}
+
+// 로그인 & 토큰
+extension BlockerServer {
     func reissueToken(completionHandler: @escaping (Bool, Int) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/users/reissue-token")!)
         request.httpMethod = "Get"
@@ -119,7 +122,10 @@ class BlockerServer {
         self.refreshToken = ""
         self.accessToken = ""
     }
-    
+}
+
+// 전자 서명
+extension BlockerServer {
     func convertFileData(fieldName: String, fileName: String, mimeType: String, fileData: Data, using boundary: String) -> Data {
       let data = NSMutableData()
 
@@ -176,16 +182,50 @@ class BlockerServer {
 
         }.resume()
     }
-    
-    func getBoardData(_ size: Int, _ page: Int, completionHandler: @escaping (Bool, Int) -> Void) {
+}
+
+// 게시판 & 게시글
+extension BlockerServer {
+    // 게시글 불러오기
+    func getBoardData(_ size: Int, _ page: Int, completionHandler: @escaping (Bool, Int, [BoardResponseData]) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/boards?size=\(size)&page=\(page)")!)
         request.httpMethod = "Get"
+        
         // header
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
         
-        URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
-            print(response)
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode([BoardResponseData].self, from: data!)
+                    completionHandler(true, 200, res ?? [])
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401, [])
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403, [])
+                }
+            }
+        }.resume()
+    }
+    
+    // 게시글 조회하기
+    func getPostData(_ boardId:Int, completionHandler: @escaping (Bool, Int, PostResponseData?) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(boardId)")!)
+        request.httpMethod = "Get"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
             // error 체크
             if let e = error {
                 print(e.localizedDescription)
@@ -194,13 +234,12 @@ class BlockerServer {
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
-                    let resultString = String(data: data!, encoding: .utf8) ?? ""
-                    print(resultString)
-                    completionHandler(true, 200)
+                    let res = try? JSONDecoder().decode(PostResponseData.self, from: data!)
+                    completionHandler(true, 200, nil)
                 } else if response.statusCode == 401 {
-                    completionHandler(false, 401)
+                    completionHandler(false, 401, nil)
                 } else if response.statusCode == 403 {
-                    completionHandler(false, 403)
+                    completionHandler(false, 403, nil)
                 }
             }
         }.resume()

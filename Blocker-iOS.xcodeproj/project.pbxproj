@@ -33,6 +33,7 @@
 		C2930DF72A517C51002E06AA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2930DF62A517C51002E06AA /* HomeView.swift */; };
 		C2930DF92A519A54002E06AA /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2930DF82A519A54002E06AA /* BoardView.swift */; };
 		C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC5E772A56F68200D79E44 /* WriteContractView.swift */; };
+		C2BD9A822A99B49E005D3ABC /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */; };
 		C2C54B632A58114B006A6082 /* WritePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C54B622A58114B006A6082 /* WritePostView.swift */; };
 		C2C54B672A583879006A6082 /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C54B662A583879006A6082 /* SearchPostView.swift */; };
 		C2E1CBD62A59870C0005CA4C /* NotSignedContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1CBD52A59870C0005CA4C /* NotSignedContract.swift */; };
@@ -69,6 +70,7 @@
 		C2930DF62A517C51002E06AA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C2930DF82A519A54002E06AA /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		C2BC5E772A56F68200D79E44 /* WriteContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteContractView.swift; sourceTree = "<group>"; };
+		C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C2C54B622A58114B006A6082 /* WritePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostView.swift; sourceTree = "<group>"; };
 		C2C54B662A583879006A6082 /* SearchPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostView.swift; sourceTree = "<group>"; };
 		C2E1CBD52A59870C0005CA4C /* NotSignedContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSignedContract.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */,
 				C2FB20532A961C3F00CB7A3B /* SignViewModel.swift */,
 				C292A1612A9797FC001A3907 /* BoardViewModel.swift */,
+				C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				C279A1212A5EC1CA009F5209 /* SignedContract.swift in Sources */,
 				C2F553682A557C9F00438D48 /* PostView.swift in Sources */,
 				C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */,
+				C2BD9A822A99B49E005D3ABC /* PostViewModel.swift in Sources */,
 				C26D472A2A5425AF00137380 /* Constant.swift in Sources */,
 				C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */,
 				C2C54B672A583879006A6082 /* SearchPostView.swift in Sources */,

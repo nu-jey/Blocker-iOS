@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PostView: View {
+    @State var postViewModel:PostViewModel = PostViewModel()
+    @State var boardId:Int
     @State var title: String = "title"
     @State var content: String = "content"
     @State var writer: String = "userID"
@@ -41,7 +43,10 @@ struct PostView: View {
             }
             .padding()
             .frame(height: 100)
-            
+        }
+        .onAppear {
+            postViewModel.getPostData(boardId)
+            print(postViewModel.postResponseData)
         }
     
     }
@@ -72,6 +77,6 @@ struct PostFooterView: View {
 }
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
-        PostView()
+        PostView(boardId: 1)
     }
 }

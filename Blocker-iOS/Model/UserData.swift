@@ -6,14 +6,34 @@
 //
 
 import Foundation
-struct UserData {
-    let url:URL?
-    let name:String
-    let email:String
+class UserData {
+    var name:String
+    var email:String
+    var url:URL?
     
     init(url: URL?, name: String, email: String) {
         self.url = url
         self.name = name
         self.email = email
+    }
+    
+    func getSignature() {
+        
+    }
+    
+    func editSignature() {
+        
+    }
+    
+    func addFavorites() {
+        
+    }
+    
+    func deleteFavorites() {
+        
+    }
+    
+    func searchMyPost() {
+        
     }
 }

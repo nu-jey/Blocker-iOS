@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SearchPostView: View {
     @State var searchKeyword:String = ""
-    @State var searchData:[BoardData] = [BoardData(title: "123"), BoardData(title: "456")]
     @FocusState private var isFocused: Bool
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -38,11 +37,11 @@ struct SearchPostView: View {
                 ScrollView {
                     // 검색 결과
                     VStack {
-                        ForEach(searchData){ item in
-                            NavigationLink(destination: PostView()) {
-                                BoardCellView(title: item.title)
-                            }
-                        }
+//                        ForEach(searchData){ item in
+//                            NavigationLink(destination: PostView()) {
+//                                BoardCellView(title: item.title)
+//                            }
+//                        }
                     }
                 }
             }
