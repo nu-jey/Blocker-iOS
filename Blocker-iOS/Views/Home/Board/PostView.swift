@@ -10,16 +10,26 @@ import SwiftUI
 struct PostView: View {
     @State var postViewModel:PostViewModel = PostViewModel()
     @State var boardId:Int
-    @State var title: String = "title"
-    @State var content: String = "content"
-    @State var writer: String = "userID"
     @State var contractModalControl: Bool = false
     var body: some View {
         VStack {
-            PostHeaderView(title: $title, writer: $writer)
+            VStack {
+                Text(postViewModel.postResponseData?.title ?? "none title")
+                    .font(.title)
+                HStack {
+                    Spacer()
+                    Text(postViewModel.postResponseData?.name ?? "none writer")
+                        .font(.body)
+                        .padding(.trailing, 20)
+                }
+                Button("print") {
+                    print(postViewModel.postResponseData)
+                }
+            }
             Divider()
             Spacer()
-            PostFooterView(content: $content)
+            Text(postViewModel.postResponseData?.content ?? "none")
+                .foregroundColor(Color("textColor"))
             Spacer()
             Divider()
             HStack {
@@ -46,35 +56,11 @@ struct PostView: View {
         }
         .onAppear {
             postViewModel.getPostData(boardId)
-            print(postViewModel.postResponseData)
         }
     
     }
 }
-struct PostHeaderView: View {
-    @Binding var title: String
-    @Binding var writer: String
-    var body: some View {
-        VStack {
-            Text(title)
-                .font(.title)
-            HStack {
-                Spacer()
-                Text(writer)
-                    .font(.body)
-                    .padding(.trailing, 20)
-            }
-        }
-    }
-}
-struct PostFooterView: View {
-    @Binding var content: String
-    var body: some View {
-        VStack {
-            Text(content)
-        }
-    }
-}
+
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
         PostView(boardId: 1)

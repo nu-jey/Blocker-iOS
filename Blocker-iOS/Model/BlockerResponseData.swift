@@ -22,16 +22,16 @@ struct BoardResponseData:Codable {
 struct PostResponseData:Codable {
     let boardId:Int
     let title:String
-    let name:String
     let content:String
-    let representImage:String
+    let name:String
+    let representImage:String?
     let view:Int
     let bookmarkCount:Int
     let createdAt:String
     let modifiedAt:String
     let images:[String]
-    let info:String
-    let contractId:Int
+    let info:String?
+    let contractId:Int?
     let isWriter:Bool
     let isBookmark:Bool
 }

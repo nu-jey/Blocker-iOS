@@ -218,13 +218,12 @@ extension BlockerServer {
     
     // 게시글 조회하기
     func getPostData(_ boardId:Int, completionHandler: @escaping (Bool, Int, PostResponseData?) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(boardId)")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/2")!)
         request.httpMethod = "Get"
         
         // header
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
-        
         URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
             // error 체크
             if let e = error {
@@ -233,9 +232,10 @@ extension BlockerServer {
             }
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
+                print(response)
                 if response.statusCode == 200 {
                     let res = try? JSONDecoder().decode(PostResponseData.self, from: data!)
-                    completionHandler(true, 200, nil)
+                    completionHandler(true, 200, res)
                 } else if response.statusCode == 401 {
                     completionHandler(false, 401, nil)
                 } else if response.statusCode == 403 {

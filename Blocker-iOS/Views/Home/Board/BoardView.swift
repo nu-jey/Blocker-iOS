@@ -26,21 +26,52 @@ struct BoardView: View {
 struct BoardCellView: View {
     @State var boardItem:BoardResponseData
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10.0)
-                .fill(Color.blue)
+        VStack(spacing: 0) {
+                AsyncImage(url: URL(string:boardItem.representImage))
+                { phase in
+                        if let image = phase.image {
+                            image // Displays the loaded image.
+                                .resizable()
+                                .frame(height: 100)
+                                .cornerRadius(20, corners: [.topLeft, .topRight])
+                        } else if phase.error != nil {
+                            Color.white // Acts as a placeholder.
+                        } else {
+                            Image(systemName: "photo.fill")
+                                .frame(height: 100)
+                        }
+                    }
+                VStack(alignment: .leading) {
+                    VStack {
+                        Text(boardItem.title)
+                        Text(boardItem.content)
+                    }
+                    .padding([.leading, .top], 20)
+                    .foregroundColor(Color("textColor"))
+                    HStack {
+                        Image(systemName: "person.circle")
+                        Text(boardItem.name)
+                        Spacer()
+                        Image(systemName: "eye.fill")
+                        Text("\(boardItem.view)")
+                        Image(systemName: "heart.fill")
+                        Text("\(boardItem.bookmarkCount)")
+                    }
+                    .padding([.leading, .trailing, .bottom], 20)
+                    .foregroundColor(Color("textColor"))
+                }
                 .frame(height: 100)
-                .padding()
-            VStack(alignment: .leading) {
-                Text(boardItem.title)
-                Text(boardItem.content)
+                .background(Color("subBackgroundColor"))
+                .cornerRadius(20, corners: [.bottomRight, .bottomLeft])
             }
+        .padding()
         }
     }
-}
+
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView()
+        // BoardView()
+        BoardCellView(boardItem: BoardResponseData(boardId: 1, title: "Title", name: "123", content: "123", representImage: "123", view: 1, bookmarkCount: 1, createdAt: "1", modifiedAt: "1"))
     }
 }
