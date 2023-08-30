@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostView: View {
-    @State var postViewModel:PostViewModel = PostViewModel()
+    @StateObject var postViewModel:PostViewModel = PostViewModel()
     @State var boardId:Int
     @State var contractModalControl: Bool = false
     var body: some View {
@@ -22,10 +22,9 @@ struct PostView: View {
                         .font(.body)
                         .padding(.trailing, 20)
                 }
-                Button("print") {
-                    print(postViewModel.postResponseData)
-                }
             }
+            Divider()
+            PostImageView(iamgeString: postViewModel.postResponseData?.representImage ?? "")
             Divider()
             Spacer()
             Text(postViewModel.postResponseData?.content ?? "none")
@@ -44,7 +43,7 @@ struct PostView: View {
                     ContractView()
                 }
                 Button("Add Bookmark") {
-                    // 관심 목록 추가
+                    postViewModel.addBookmark(boardId)
                 }
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)
@@ -58,6 +57,21 @@ struct PostView: View {
             postViewModel.getPostData(boardId)
         }
     
+    }
+}
+struct PostImageView: View {
+    @State var iamgeString:String
+    
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                AsyncImageView(iamgeURL: iamgeString)
+                AsyncImageView(iamgeURL: iamgeString)
+                AsyncImageView(iamgeURL: iamgeString)
+                AsyncImageView(iamgeURL: iamgeString)
+                AsyncImageView(iamgeURL: iamgeString)
+            }
+        }
     }
 }
 

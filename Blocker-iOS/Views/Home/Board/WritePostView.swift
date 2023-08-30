@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import BSImagePicker
 
 struct WritePostView: View {
     @State var title:String = ""
     @State var content:String = ""
     @State var contractTitle:String = "contract"
+    @State var isPresentedSheet = false
     var body: some View {
         VStack {
             HStack {
@@ -32,6 +34,14 @@ struct WritePostView: View {
                 
             }
             Divider()
+            HStack {
+                Button("Load Images") {
+                    self.isPresentedSheet = true
+                } .sheet(isPresented: self.$isPresentedSheet, content: {
+                    ImagePickerCoordinatorView()
+                })
+            }
+            Divider()
             TextEditor(text: $content)
                 .cornerRadius(10)
                 .font(.body)
@@ -48,11 +58,5 @@ struct WritePostView: View {
             }
             
         }
-    }
-}
-
-struct WritePostView_Previews: PreviewProvider {
-    static var previews: some View {
-        WritePostView()
     }
 }

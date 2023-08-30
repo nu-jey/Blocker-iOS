@@ -16,7 +16,7 @@ struct HomeView: View {
                 .frame(maxWidth:.infinity, maxHeight: .infinity)
             ScrollView {
                 ImageSliderView()
-                    .frame(width: constantData.width, height: constantData.width*0.6525)
+                    .frame(width: ConstantData.width, height: ConstantData.width*0.6525)
                 Divider()
                 BoardView()
             }

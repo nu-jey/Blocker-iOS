@@ -224,6 +224,47 @@ extension BlockerServer {
         // header
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode(PostResponseData.self, from: data!)
+                    completionHandler(true, 200, res)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401, nil)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403, nil)
+                }
+            }
+        }.resume()
+    }
+    
+    // 북마크 등록
+    func addBookmark(_ boardId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/bookmarks")!)
+        request.httpMethod = "POST"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // body
+        let body = [
+            "boardId": "\(boardId)"
+        ] as [String: Any]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error creating JSON data")
+        }
+        
         URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
             // error 체크
             if let e = error {
@@ -234,12 +275,400 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 print(response)
                 if response.statusCode == 200 {
-                    let res = try? JSONDecoder().decode(PostResponseData.self, from: data!)
-                    completionHandler(true, 200, res)
+                    completionHandler(true, 200)
                 } else if response.statusCode == 401 {
-                    completionHandler(false, 401, nil)
+                    completionHandler(false, 401)
                 } else if response.statusCode == 403 {
-                    completionHandler(false, 403, nil)
+                    completionHandler(false, 403)
+                } else if response.statusCode == 409 {
+                    completionHandler(false, 409)
+                }
+            }
+        }.resume()
+        
+        
+    }
+    
+    // 북마크 삭제
+    func deleteBookmark(_ boardId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/bookmarks/\(boardId)")!)
+        request.httpMethod = "DELETE"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+        
+    }
+    
+    // 게시글 작성
+    func wirtePost(_ boardId:Int, _ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards")!)
+        request.httpMethod = "POST"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // body
+        let body = [
+            "content": post.content,
+            "title": post.title,
+            "info": post.info ?? "",
+            "representImage": post.representImage ?? "",
+            "contractId": post.contractId,
+            "images": post.images
+        ] as [String: Any]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error creating JSON data")
+        }
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
+    
+    // 게시글 삭제
+    func deletePost(_ boardId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(boardId)")!)
+        request.httpMethod = "DELETE"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                } else if response.statusCode == 404 {
+                    completionHandler(false, 404)
+                }
+            }
+        }.resume()
+    }
+    
+    // 게시글 수정
+    func patchPost(_ post:EditedPost, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(post.boardId)")!)
+        request.httpMethod = "PATCH"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // body
+        let body = [
+            "title": "\(post.title)",
+            "content": "\(post.content)",
+            "info": "\(post.info ?? "")",
+            "representImage": "\(post.representImage ?? "")",
+            "contractId": "\(post.contractId)",
+            "deleteImageIds": "\(convertListToString(post.deleteImageIds.map { String($0) }))",
+            "addImageAddresses": "\(convertListToString(post.addImageAddresses))"
+        ] as [String: Any]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error creating JSON data")
+        }
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                } else if response.statusCode == 404 {
+                    completionHandler(false, 404)
+                }
+            }
+        }.resume()
+    }
+    
+    func convertListToString(_ list: [String]) -> String {
+        var res = "["
+        for item in list {
+            res += item
+            res += ","
+        }
+        _ = res.popLast()
+        return res + "]"
+    }
+    
+}
+
+// 이미지 저장
+extension BlockerServer {
+    func saveImage(_ image:UIImage, completionHandler: @escaping (Bool, Int, String) -> Void) {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        var request = URLRequest(url: URL(string: "\(self.host)/images")!)
+        request.httpMethod = "POST"
+
+        // header
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+
+        // body -> 이미지 파일
+        let httpBody = NSMutableData()
+        httpBody.append(convertFileData(fieldName: "image",
+                                        fileName: "\(self.userData.email)_signature.png",
+                                        mimeType: "image/png",
+                                        fileData: image.pngData()!,
+                                        using: boundary))
+        httpBody.appendString("--\(boundary)--")
+        request.httpBody = httpBody as Data
+        
+        URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode(SaveImageResponseData.self, from: data!)
+                    completionHandler(true, 200, res?.address ?? "fail")
+                } else if response.statusCode == 200 { // 파일 안 보냄
+                    completionHandler(false, 204, "fail")
+                } else if response.statusCode == 401 { // 토큰 만료
+                    completionHandler(false, 401, "fail")
+                } else if response.statusCode == 403 { // 전자서명 저장 실패
+                    completionHandler(false, 403, "fail")
+                } else if response.statusCode == 500 { // INTERNAL SERVER ERROR
+                    completionHandler(false, 500, "fail")
+                }
+            }
+
+        }.resume()
+    }
+}
+
+// 미체결 계약서
+extension BlockerServer {
+    func writeContract(_ title:String, _ content:String, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts")!)
+        request.httpMethod = "POST"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // body
+        let body = [
+            "title": "\(title)",
+            "content": "\(content)"
+        ] as [String: Any]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error creating JSON data")
+        }
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
+    
+    func patchContract(_ contract:Contract, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts/\(contract.contractId)")!)
+        request.httpMethod = "PATCH"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        
+        // body
+        let body = [
+            "title": "\(contract.title)",
+            "content": "\(contract.content)"
+        ] as [String: Any]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error creating JSON data")
+        }
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
+    
+    func deleteContract(_ contractId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts/\(contractId)")!)
+        request.httpMethod = "DELETE"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
+    
+    func getContractData(_ contractId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts/\(contractId)")!)
+        request.httpMethod = "GET"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                     let res = try? JSONDecoder().decode(ContractResponseData.self, from: data!)
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
+    
+    func getContractListData(completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts")!)
+        request.httpMethod = "GET"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                if response.statusCode == 200 {
+                     let res = try? JSONDecoder().decode(ContractListResponseData.self, from: data!)
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
                 }
             }
         }.resume()

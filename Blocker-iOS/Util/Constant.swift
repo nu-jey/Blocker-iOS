@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 import UniformTypeIdentifiers
 
-struct constantData {
+struct ConstantData {
     static let width = UIScreen.main.bounds.width
     static let height = UIScreen.main.bounds.height
     static let allowedFileType: [UTType] = [.audio,.image,.pdf]
+    static let imagePickerSelectionMax:Int = 5
 }

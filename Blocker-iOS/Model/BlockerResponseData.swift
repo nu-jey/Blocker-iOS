@@ -35,3 +35,23 @@ struct PostResponseData:Codable {
     let isWriter:Bool
     let isBookmark:Bool
 }
+
+struct BlockerPostImage:Codable {
+    let imageId:Int
+    let imageAddress:String
+}
+
+struct SaveImageResponseData:Codable {
+    let address:String
+}
+
+struct ContractResponseData:Codable {
+    let title:String
+    let content:String
+    let createdAt:String
+    let modifiedAt:String
+}
+
+struct ContractListResponseData:Codable {
+    let list:[ContractResponseData]
+}
