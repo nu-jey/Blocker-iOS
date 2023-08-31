@@ -27,7 +27,12 @@ struct BoardCellView: View {
     @State var boardItem:BoardResponseData
     var body: some View {
         VStack(spacing: 0) {
-            AsyncImageView(iamgeURL: boardItem.representImage)
+            ZStack {
+                AsyncImageView(iamgeURL: boardItem.representImage)
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color("defaultImageColor"))
+            .cornerRadius(20, corners: [.topLeft, .topRight])
             VStack(alignment: .leading) {
                 VStack {
                     Text(boardItem.title)
@@ -58,9 +63,9 @@ struct BoardCellView: View {
 }
 
 struct AsyncImageView:View {
-    @State var iamgeURL:String
+    @State var iamgeURL:String?
     var body: some View {
-        AsyncImage(url: URL(string:iamgeURL))
+        AsyncImage(url: URL(string:iamgeURL ?? ""))
         { phase in
             if let image = phase.image {
                 image // Displays the loaded image.
@@ -70,8 +75,8 @@ struct AsyncImageView:View {
             } else if phase.error != nil {
                 Color.white // Acts as a placeholder.
             } else {
-                Image(systemName: "photo.fill")
-                    .frame(height: 100)
+                    Image("defaultImage")
+                        .frame(height: 100)
             }
         }
     }

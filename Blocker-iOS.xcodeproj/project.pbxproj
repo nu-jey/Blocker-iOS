@@ -171,7 +171,6 @@
 				C2BC5E742A56F5B700D79E44 /* MyPage */,
 				C2BC5E722A56F58E00D79E44 /* Contract */,
 				C2BC5E762A56F5DB00D79E44 /* Verfication */,
-				C282351A2A9F8602009054D4 /* ImagePicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,6 +211,7 @@
 				C2930DF82A519A54002E06AA /* BoardView.swift */,
 				C2F553672A557C9F00438D48 /* PostView.swift */,
 				C2C54B622A58114B006A6082 /* WritePostView.swift */,
+				C282351A2A9F8602009054D4 /* ImagePicker.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";

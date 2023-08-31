@@ -12,7 +12,12 @@ struct WritePostView: View {
     @State var title:String = ""
     @State var content:String = ""
     @State var contractTitle:String = "contract"
+    @State var contractId:Int?
+    @State var info:String?
+    @State var representImage:UIImage?
     @State var isPresentedSheet = false
+    @State var images:[UIImage] = []
+    
     var body: some View {
         VStack {
             HStack {
@@ -23,7 +28,7 @@ struct WritePostView: View {
             }
             .padding()
             Divider()
-            HStack {
+            HStack { // 계약서
                 Button("Load Contract") {
                     // 미체결 계약서 목록
                 }
@@ -34,13 +39,18 @@ struct WritePostView: View {
                 
             }
             Divider()
-            HStack {
+            HStack { // 게시글 이미지
                 Button("Load Images") {
                     self.isPresentedSheet = true
-                } .sheet(isPresented: self.$isPresentedSheet, content: {
-                    ImagePickerCoordinatorView()
+                } .fullScreenCover(isPresented: self.$isPresentedSheet, content: {
+                    ImagePickerCoordinatorView(images: $images)
                 })
+                Button("Image Data") {
+                    print(images)
+                }
             }
+            Divider()
+            // 위치 정보
             Divider()
             TextEditor(text: $content)
                 .cornerRadius(10)
@@ -54,6 +64,7 @@ struct WritePostView: View {
             HStack {
                 Button("Save") {
                     // 게시글 저장
+                    print(title, content, info, representImage, contractId, images)
                 }
             }
             
