@@ -12,6 +12,7 @@
 		C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */; };
 		C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */; };
 		C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDE2A6BF09F00A9BA8F /* UserData.swift */; };
+		C235174B2AA224E600EA1250 /* PostcodeServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C235174A2AA224E600EA1250 /* PostcodeServiceView.swift */; };
 		C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23C39E32A8F9170003D5D93 /* BlockerSever.swift */; };
 		C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */; };
 		C25E2FC42A4EB2E90069A8C0 /* Blocker_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E2FC32A4EB2E90069A8C0 /* Blocker_iOSApp.swift */; };
@@ -38,6 +39,9 @@
 		C2930DF92A519A54002E06AA /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2930DF82A519A54002E06AA /* BoardView.swift */; };
 		C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC5E772A56F68200D79E44 /* WriteContractView.swift */; };
 		C2BD9A822A99B49E005D3ABC /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */; };
+		C2C48BA82AAA0D4000BDC266 /* Blocker++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */; };
+		C2C48BAC2AAA11EF00BDC266 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C2C48BAB2AAA11EF00BDC266 /* .gitignore */; };
+		C2C48BAE2AAA122300BDC266 /* Host.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2C48BAD2AAA122300BDC266 /* Host.plist */; };
 		C2C54B632A58114B006A6082 /* WritePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C54B622A58114B006A6082 /* WritePostView.swift */; };
 		C2C54B672A583879006A6082 /* SearchPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C54B662A583879006A6082 /* SearchPostView.swift */; };
 		C2E1CBD62A59870C0005CA4C /* NotSignedContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1CBD52A59870C0005CA4C /* NotSignedContract.swift */; };
@@ -53,6 +57,7 @@
 		C2233BDB2A6BB7F500A9BA8F /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		C2233BDE2A6BF09F00A9BA8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		C235174A2AA224E600EA1250 /* PostcodeServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcodeServiceView.swift; sourceTree = "<group>"; };
 		C23C39E32A8F9170003D5D93 /* BlockerSever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerSever.swift; sourceTree = "<group>"; };
 		C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerResponseData.swift; sourceTree = "<group>"; };
 		C25E2FC02A4EB2E90069A8C0 /* Blocker-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blocker-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +83,9 @@
 		C2930DF82A519A54002E06AA /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		C2BC5E772A56F68200D79E44 /* WriteContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteContractView.swift; sourceTree = "<group>"; };
 		C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Blocker++Bundle.swift"; sourceTree = "<group>"; };
+		C2C48BAB2AAA11EF00BDC266 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		C2C48BAD2AAA122300BDC266 /* Host.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Host.plist; sourceTree = "<group>"; };
 		C2C54B622A58114B006A6082 /* WritePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostView.swift; sourceTree = "<group>"; };
 		C2C54B662A583879006A6082 /* SearchPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostView.swift; sourceTree = "<group>"; };
 		C2E1CBD52A59870C0005CA4C /* NotSignedContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSignedContract.swift; sourceTree = "<group>"; };
@@ -108,6 +116,7 @@
 			children = (
 				C26D47292A5425AF00137380 /* Constant.swift */,
 				C2092B182A94F6F600F8DEBE /* Utils.swift */,
+				C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -126,6 +135,7 @@
 		C25E2FB72A4EB2E90069A8C0 = {
 			isa = PBXGroup;
 			children = (
+				C2C48BAB2AAA11EF00BDC266 /* .gitignore */,
 				C25E2FC22A4EB2E90069A8C0 /* Blocker-iOS */,
 				C25E2FC12A4EB2E90069A8C0 /* Products */,
 			);
@@ -151,6 +161,7 @@
 				C25E2FC72A4EB2EA0069A8C0 /* Assets.xcassets */,
 				C25E2FD32A4ECBE50069A8C0 /* GoogleService-Info.plist */,
 				C25E2FC92A4EB2EA0069A8C0 /* Preview Content */,
+				C2C48BAD2AAA122300BDC266 /* Host.plist */,
 			);
 			path = "Blocker-iOS";
 			sourceTree = "<group>";
@@ -212,6 +223,7 @@
 				C2F553672A557C9F00438D48 /* PostView.swift */,
 				C2C54B622A58114B006A6082 /* WritePostView.swift */,
 				C282351A2A9F8602009054D4 /* ImagePicker.swift */,
+				C235174A2AA224E600EA1250 /* PostcodeServiceView.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -327,6 +339,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2C48BAC2AAA11EF00BDC266 /* .gitignore in Resources */,
+				C2C48BAE2AAA122300BDC266 /* Host.plist in Resources */,
 				C25E2FCB2A4EB2EA0069A8C0 /* Preview Assets.xcassets in Resources */,
 				C25E2FC82A4EB2EA0069A8C0 /* Assets.xcassets in Resources */,
 				C25E2FD42A4ECBE50069A8C0 /* GoogleService-Info.plist in Resources */,
@@ -368,9 +382,11 @@
 				C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */,
 				C2BD9A822A99B49E005D3ABC /* PostViewModel.swift in Sources */,
 				C26D472A2A5425AF00137380 /* Constant.swift in Sources */,
+				C2C48BA82AAA0D4000BDC266 /* Blocker++Bundle.swift in Sources */,
 				C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */,
 				C282351B2A9F8602009054D4 /* ImagePicker.swift in Sources */,
 				C2C54B672A583879006A6082 /* SearchPostView.swift in Sources */,
+				C235174B2AA224E600EA1250 /* PostcodeServiceView.swift in Sources */,
 				C292A1622A9797FC001A3907 /* BoardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ class BlockerServer {
     private var accessToken:String = ""
     private var userData:UserData = UserData(url: nil, name: "", email: "")
     static let shared = BlockerServer()
-    private let host:String = ""
+    private let host:String = Bundle.main.host!
     
     func setUserData(_ inputData: UserData) {
         self.userData = inputData

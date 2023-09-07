@@ -28,13 +28,11 @@ struct LaunchView: View {
                     .fullScreenCover(isPresented: $launchViewModel.isLogined) {
                         ContentView()
                     }
-                    Button("lgo") {
-                        launchViewModel.state = .signautreNeeded
-                    }
                 }
             }
             .padding()
             .background(Color("backgroundColor"))
+            
         }
         .alert(LocalizedStringKey("로그인 실패"), isPresented: $launchViewModel.isAlert) {
                     Text("확인")
