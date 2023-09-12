@@ -12,28 +12,28 @@ struct ContractsView: View {
     @State var selectedContractTab: Int = 0
     var body: some View {
         TabView(selection: $selectedContractTab) {
-            ContractListView(contractType: "미체결", selectedContractTab: $selectedContractTab)
+            ContractListView(contractType: .notSigned, selectedContractTab: $selectedContractTab)
                 .tag(0)
                 .tabItem {
                     VStack {
                         Image(systemName: "folder")
-                        Text("Folder")
+                        Text("Not Signed")
                     }
                 }
-            ContractListView(contractType: "체결중", selectedContractTab: $selectedContractTab)
+            ContractListView(contractType: .signing, selectedContractTab: $selectedContractTab)
                 .tag(1)
                 .tabItem {
                     VStack {
                         Image(systemName: "folder")
-                        Text("Folder")
+                        Text("Signing")
                     }
                 }
-            ContractListView(contractType: "체결", selectedContractTab: $selectedContractTab)
+            ContractListView(contractType: .signed, selectedContractTab: $selectedContractTab)
                 .tag(2)
                 .tabItem {
                     VStack {
                         Image(systemName: "folder")
-                        Text("Folder")
+                        Text("Signed")
                     }
                 }
         }
@@ -43,8 +43,9 @@ struct ContractsView: View {
 }
 
 struct ContractListView: View {
-    @State var contractType: String
+    @State var contractType:ContractType
     @Binding var selectedContractTab: Int
+    @StateObject var contractsViewModel:ContractsViewModel = ContractsViewModel()
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Rectangle()
@@ -52,44 +53,27 @@ struct ContractListView: View {
                 .frame(maxWidth:.infinity, maxHeight: .infinity)
             ScrollView {
                 if selectedContractTab == 0 {
-                    let data: [ContractData] = [
-                        ContractData(title: "123"),
-                        ContractData(title: "234"),
-                        ContractData(title: "345"),
-                        ContractData(title: "456"),
-                    ]
-                    ForEach(data) { item in
+                    ForEach(contractsViewModel.notSigendContractListResponseData, id: \.title) { item in
                         NavigationLink(destination: NotSignedContract()) {
                             NotSignedContractCell(title: item.title)
                         }
                     }
                 } else if selectedContractTab == 1 {
-                    
-                    let data: [ContractData] = [
-                        ContractData(title: "123"),
-                        ContractData(title: "234"),
-                        ContractData(title: "345"),
-                        ContractData(title: "456"),
-                    ]
-                    ForEach(data) { item in
+                    ForEach(contractsViewModel.signingContractListResponseData, id: \.title) { item in
                         NavigationLink(destination: SigningContractView()) {
                             SigningContractCell(title: item.title)
                         }
                     }
                 } else {
-                    
-                    let data: [ContractData] = [
-                        ContractData(title: "123"),
-                        ContractData(title: "234"),
-                        ContractData(title: "345"),
-                        ContractData(title: "456"),
-                    ]
-                    ForEach(data) { item in
+                    ForEach(contractsViewModel.signedContractListResponseData, id: \.title) { item in
                         NavigationLink(destination: SignedContractView()) {
                             SignedContractCell(title: item.title)
                         }
                     }
                 }
+            }
+            .onAppear {
+                contractsViewModel.getContractListResponseData(contractType)
             }
             if selectedContractTab == 0 {
                 VStack {
@@ -109,6 +93,7 @@ struct ContractData: Identifiable {
     let id = UUID()
     let title: String
 }
+
 struct NotSignedContractCell: View {
     @State var title:String
     var body: some View {
@@ -121,6 +106,7 @@ struct NotSignedContractCell: View {
         }
     }
 }
+
 struct SigningContractCell: View {
     @State var title:String
     var body: some View {
@@ -133,6 +119,7 @@ struct SigningContractCell: View {
         }
     }
 }
+
 struct SignedContractCell: View {
     @State var title:String
     var body: some View {
@@ -145,6 +132,7 @@ struct SignedContractCell: View {
         }
     }
 }
+
 struct ContractsView_Previews: PreviewProvider {
     static var previews: some View {
         ContractsView(sideMenuControl: .constant(true))

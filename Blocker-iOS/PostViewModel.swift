@@ -15,7 +15,6 @@ class PostViewModel: ObservableObject {
             if state {
                 DispatchQueue.main.async { [weak self] in
                     self?.postResponseData = data
-                    print(data)
                 }
             } else {
                 if statusCode == 401 {

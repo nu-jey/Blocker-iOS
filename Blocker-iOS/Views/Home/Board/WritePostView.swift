@@ -17,16 +17,16 @@ struct WritePostView: View {
     @State var representImage:UIImage?
     @State var images:[UIImage] = []
     var body: some View {
-        Group {
-            VStack {
-                HStack {
-                    TextField("Enter title", text: $title)
-                        .padding()
-                        .background(Color(uiColor: .secondarySystemBackground))
-                        .cornerRadius(10)
-                }
-                .padding()
-                Divider()
+        VStack {
+            HStack {
+                TextField("Enter title", text: $title)
+                    .padding()
+                    .background(Color(uiColor: .secondarySystemBackground))
+                    .cornerRadius(10)
+            }
+            .padding()
+            Divider()
+            Group {
                 HStack { // 계약서
                     Button("Load Contract") {
                         // 미체결 계약서 목록
@@ -42,25 +42,23 @@ struct WritePostView: View {
                 Divider()
                 PostLocationInfoView()
                 Divider()
-                TextEditor(text: $content)
-                    .cornerRadius(10)
-                    .font(.body)
-                    .frame(maxWidth:.infinity, maxHeight: .infinity)
-                    .foregroundColor(Color("textColor"))
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .scrollContentBackground(.hidden)
-                    .padding()
-                Divider()
-//                HStack {
-//                    Button("Save") {
-//                        // 게시글 저장
-//                        print(title, content, info, representImage, contractId, images)
-//                    }
-//                }
+            }
+            TextEditor(text: $content)
+                .cornerRadius(10)
+                .font(.body)
+                .frame(maxWidth:.infinity, maxHeight: .infinity)
+                .foregroundColor(Color("textColor"))
+                .background(Color(uiColor: .secondarySystemBackground))
+                .scrollContentBackground(.hidden)
+                .padding()
+            Divider()
+            Button("Save") {
+                print(title, content, info, representImage, contractId, images)
             }
         }
     }
 }
+
 struct PostImageLoadView:View {
     @State var isPresentedSheet = false
     @State var images:[UIImage]

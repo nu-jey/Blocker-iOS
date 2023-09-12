@@ -137,7 +137,6 @@ extension BlockerServer {
 
       return data as Data
     }
-
     
     func updateSignature(_ image: UIImage, completionHandler: @escaping (Bool, Int) -> Void) {
         let boundary = "Boundary-\(UUID().uuidString)"
@@ -159,6 +158,7 @@ extension BlockerServer {
         request.httpBody = httpBody as Data
         
         URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
+            print(response)
             // error 체크
             if let e = error {
                 print(e.localizedDescription)
@@ -169,6 +169,7 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     completionHandler(true, 200)
+                    // 토큰 교체 ->
                 } else if response.statusCode == 200 { // 파일 안 보냄
                     completionHandler(false, 204)
                 } else if response.statusCode == 401 { // 토큰 만료
@@ -645,8 +646,8 @@ extension BlockerServer {
         }.resume()
     }
     
-    func getContractListData(completionHandler: @escaping (Bool, Int) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/contracts")!)
+    func getContractListData(_ contractType:ContractType, completionHandler: @escaping (Bool, Int, [ContractResponseData]) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=NOT_CONCLUDED")!)
         request.httpMethod = "GET"
         
         // header
@@ -661,14 +662,13 @@ extension BlockerServer {
             }
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
                 if response.statusCode == 200 {
-                     let res = try? JSONDecoder().decode(ContractListResponseData.self, from: data!)
-                    completionHandler(true, 200)
+                    let res = try? JSONDecoder().decode([ContractResponseData].self, from: data!)
+                    completionHandler(true, 200, res ?? [])
                 } else if response.statusCode == 401 {
-                    completionHandler(false, 401)
+                    completionHandler(false, 401, [])
                 } else if response.statusCode == 403 {
-                    completionHandler(false, 403)
+                    completionHandler(false, 403, [])
                 }
             }
         }.resume()

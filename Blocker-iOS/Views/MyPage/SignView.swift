@@ -13,6 +13,7 @@ struct SignView: View {
     @State private var canvasView = PKCanvasView()
     @StateObject var signViewModel = SignViewModel()
     @StateObject var launchViewModel:LaunchViewModel
+    
     var body: some View {
         VStack {
             MyCanvas(canvasView: $canvasView)
@@ -25,14 +26,15 @@ struct SignView: View {
                 .background(Color.red)
                 Spacer()
                 Button("Save") {
-//                    let res = saveSignatureImage()
-//                    if res {
-//                        print("전자 서명 저장 성공")
-//                        self.launchViewModel.state = .signedIn
-//                    } else {
-//                        print("전자 서명 저장 오류 발생")
-//                    }
-                    self.launchViewModel.state = .signedIn
+                    let res = saveSignatureImage()
+                    if res {
+                        print("전자 서명 저장 성공")
+                        self.launchViewModel.state = .signedIn
+                    } else {
+                        print("전자 서명 저장 오류 발생")
+                        self.launchViewModel.state = .signedOut
+                    }
+                    
                 }
                 .frame(width: 140)
                 .background(Color.yellow)
@@ -43,25 +45,12 @@ struct SignView: View {
         .background(Color("subBackgroundColor"))
         .cornerRadius(10)
     }
+    
     func saveSignatureImage() -> Bool {
         let image = canvasView.drawing.image(from: CGRect(x: 0, y: 0, width: canvasView.frame.width, height: canvasView.frame.height), scale: 1.0)
-        
-//        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
-//            return false
-//        }
-//        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-//            return false
-//        }
         let res = signViewModel.updateSign(image)
         print(res.1)
         return res.0
-//        do {
-//            try data.write(to: directory.appendingPathComponent("signature.png")!)
-//            return true
-//        } catch {
-//            print(error.localizedDescription)
-//            return false
-//        }
     }
 }
 struct MyCanvas: UIViewRepresentable {
