@@ -46,12 +46,11 @@ struct SaveImageResponseData:Codable {
 }
 
 struct ContractResponseData:Codable {
+    let contractId:Int
     let title:String
     let content:String
     let createdAt:String
     let modifiedAt:String
 }
 
-struct ContractListResponseData:Codable {
-    let list:[ContractResponseData]
-}
+

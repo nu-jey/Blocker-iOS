@@ -39,7 +39,7 @@ struct PostView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color("subBackgroundColor"))
                 .cornerRadius(5)
-                .sheet(isPresented: $contractModalControl) {
+                .fullScreenCover(isPresented: $contractModalControl) {
                     ContractView()
                 }
                 Button("Add Bookmark") {

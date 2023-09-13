@@ -38,6 +38,8 @@
 		C2930DF72A517C51002E06AA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2930DF62A517C51002E06AA /* HomeView.swift */; };
 		C2930DF92A519A54002E06AA /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2930DF82A519A54002E06AA /* BoardView.swift */; };
 		C2AFF69A2AB0966D0074985D /* ContractsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AFF6992AB0966D0074985D /* ContractsViewModel.swift */; };
+		C2AFF69C2AB0A8C40074985D /* NotSignedContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */; };
+		C2AFF69E2AB0ABAE0074985D /* WrtieContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */; };
 		C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC5E772A56F68200D79E44 /* WriteContractView.swift */; };
 		C2BD9A822A99B49E005D3ABC /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */; };
 		C2C48BA82AAA0D4000BDC266 /* Blocker++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */; };
@@ -83,6 +85,8 @@
 		C2930DF62A517C51002E06AA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C2930DF82A519A54002E06AA /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		C2AFF6992AB0966D0074985D /* ContractsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsViewModel.swift; sourceTree = "<group>"; };
+		C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSignedContractViewModel.swift; sourceTree = "<group>"; };
+		C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrtieContractViewModel.swift; sourceTree = "<group>"; };
 		C2BC5E772A56F68200D79E44 /* WriteContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteContractView.swift; sourceTree = "<group>"; };
 		C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Blocker++Bundle.swift"; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				C292A1612A9797FC001A3907 /* BoardViewModel.swift */,
 				C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */,
 				C2AFF6992AB0966D0074985D /* ContractsViewModel.swift */,
+				C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */,
+				C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 				C2930DF52A517B4F002E06AA /* VerificationView.swift in Sources */,
 				C282351E2A9F8FCE009054D4 /* Post.swift in Sources */,
 				C279A1242A5ECE72009F5209 /* Verification.swift in Sources */,
+				C2AFF69C2AB0A8C40074985D /* NotSignedContractViewModel.swift in Sources */,
 				C279A1212A5EC1CA009F5209 /* SignedContract.swift in Sources */,
 				C2F553682A557C9F00438D48 /* PostView.swift in Sources */,
 				C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */,
@@ -391,6 +398,7 @@
 				C282351B2A9F8602009054D4 /* ImagePicker.swift in Sources */,
 				C2C54B672A583879006A6082 /* SearchPostView.swift in Sources */,
 				C235174B2AA224E600EA1250 /* PostcodeServiceView.swift in Sources */,
+				C2AFF69E2AB0ABAE0074985D /* WrtieContractViewModel.swift in Sources */,
 				C292A1622A9797FC001A3907 /* BoardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

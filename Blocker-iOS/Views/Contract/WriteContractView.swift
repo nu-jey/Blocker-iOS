@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct WriteContractView: View {
+    @Environment(\.dismiss) private var dismiss
     @State var title:String = ""
     @State var content:String = ""
+    @StateObject var writeContractViewModel:WrtieContractViewModel = WrtieContractViewModel()
+    @State var contractData:Contract?
     var body: some View {
         VStack {
             HStack {
@@ -32,8 +35,20 @@ struct WriteContractView: View {
             Divider()
             HStack {
                 Button("Save") {
-                    // 게시글 저장
+                    if contractData == nil {
+                        writeContractViewModel.writeContract(title, content)
+                        dismiss()
+                    } else {
+                        writeContractViewModel.patchContract(Contract(contractId: contractData!.contractId, title: title, content: content))
+                        dismiss()
+                    }
                 }
+            }
+        }
+        .onAppear {
+            if contractData != nil {
+                self.title = contractData!.title
+                self.content = contractData!.content
             }
         }
     }

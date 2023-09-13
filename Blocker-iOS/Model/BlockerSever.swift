@@ -605,7 +605,6 @@ extension BlockerServer {
             }
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
                 if response.statusCode == 200 {
                     completionHandler(true, 200)
                 } else if response.statusCode == 401 {
@@ -617,7 +616,7 @@ extension BlockerServer {
         }.resume()
     }
     
-    func getContractData(_ contractId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+    func getContractData(_ contractId:Int, completionHandler: @escaping (Bool, Int, ContractResponseData?) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/contracts/\(contractId)")!)
         request.httpMethod = "GET"
         
@@ -633,14 +632,13 @@ extension BlockerServer {
             }
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
                 if response.statusCode == 200 {
                      let res = try? JSONDecoder().decode(ContractResponseData.self, from: data!)
-                    completionHandler(true, 200)
+                    completionHandler(true, 200, res)
                 } else if response.statusCode == 401 {
-                    completionHandler(false, 401)
+                    completionHandler(false, 401, nil)
                 } else if response.statusCode == 403 {
-                    completionHandler(false, 403)
+                    completionHandler(false, 403, nil)
                 }
             }
         }.resume()

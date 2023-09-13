@@ -54,7 +54,7 @@ struct ContractListView: View {
             ScrollView {
                 if selectedContractTab == 0 {
                     ForEach(contractsViewModel.notSigendContractListResponseData, id: \.title) { item in
-                        NavigationLink(destination: NotSignedContract()) {
+                        NavigationLink(destination: NotSignedContract(contractId: item.contractId)) {
                             NotSignedContractCell(title: item.title)
                         }
                     }
