@@ -16,46 +16,52 @@ struct WritePostView: View {
     @State var info:String?
     @State var representImage:UIImage?
     @State var images:[UIImage] = []
+    @State private var showModal:Bool = false
     var body: some View {
-        VStack {
-            HStack {
-                TextField("Enter title", text: $title)
-                    .padding()
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .cornerRadius(10)
-            }
-            .padding()
-            Divider()
-            Group {
-                HStack { // 계약서
-                    Button("Load Contract") {
-                        // 미체결 계약서 목록
-                    }
-                    .padding(.leading, 20)
-                    Spacer()
-                    Text(contractTitle)
-                        .padding(.trailing, 20)
-                    
+        ZStack {
+            VStack {
+                HStack {
+                    TextField("Enter title", text: $title)
+                        .padding()
+                        .background(Color(uiColor: .secondarySystemBackground))
+                        .cornerRadius(10)
                 }
-                Divider()
-                PostImageLoadView(images: images)
-                Divider()
-                PostLocationInfoView()
-                Divider()
-            }
-            TextEditor(text: $content)
-                .cornerRadius(10)
-                .font(.body)
-                .frame(maxWidth:.infinity, maxHeight: .infinity)
-                .foregroundColor(Color("textColor"))
-                .background(Color(uiColor: .secondarySystemBackground))
-                .scrollContentBackground(.hidden)
                 .padding()
-            Divider()
-            Button("Save") {
-                print(title, content, info, representImage, contractId, images)
+                Divider()
+                Group {
+                    HStack { // 계약서
+                        Button(action: {showModal = true}) {
+                            // 미체결 계약서 목록
+                            Text("Load Contract")
+                        }
+                        .padding(.leading, 20)
+                        Spacer()
+                        Text(contractTitle)
+                            .padding(.trailing, 20)
+                        
+                    }
+                    Divider()
+                    PostImageLoadView(images: images)
+                    Divider()
+                    PostLocationInfoView()
+                    Divider()
+                }
+                TextEditor(text: $content)
+                    .cornerRadius(10)
+                    .font(.body)
+                    .frame(maxWidth:.infinity, maxHeight: .infinity)
+                    .foregroundColor(Color("textColor"))
+                    .background(Color(uiColor: .secondarySystemBackground))
+                    .scrollContentBackground(.hidden)
+                    .padding()
+                Divider()
+                Button("Save") {
+                    print(title, content, info, representImage, contractId, images)
+                }
             }
+            ContractListModalView(isShowing: $showModal)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
