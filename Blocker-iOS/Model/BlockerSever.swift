@@ -170,7 +170,7 @@ extension BlockerServer {
                 if response.statusCode == 200 {
                     completionHandler(true, 200)
                     // 토큰 교체 ->
-                } else if response.statusCode == 200 { // 파일 안 보냄
+                } else if response.statusCode == 201 { // 파일 안 보냄
                     completionHandler(false, 204)
                 } else if response.statusCode == 401 { // 토큰 만료
                     completionHandler(false, 401)
@@ -219,7 +219,7 @@ extension BlockerServer {
     
     // 게시글 조회하기
     func getPostData(_ boardId:Int, completionHandler: @escaping (Bool, Int, PostResponseData?) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/boards/2")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(boardId)")!)
         request.httpMethod = "Get"
         
         // header
@@ -236,6 +236,7 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     let res = try? JSONDecoder().decode(PostResponseData.self, from: data!)
+                    print(response)
                     completionHandler(true, 200, res)
                 } else if response.statusCode == 401 {
                     completionHandler(false, 401, nil)
@@ -322,7 +323,7 @@ extension BlockerServer {
     }
     
     // 게시글 작성
-    func wirtePost(_ boardId:Int, _ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
+    func wirtePost(_ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/boards")!)
         request.httpMethod = "POST"
         
@@ -334,8 +335,8 @@ extension BlockerServer {
         let body = [
             "content": post.content,
             "title": post.title,
-            "info": post.info ?? "",
-            "representImage": post.representImage ?? "",
+            "info": post.info ?? nil,
+            "representImage": post.representImage ?? nil,
             "contractId": post.contractId,
             "images": post.images
         ] as [String: Any]
@@ -399,8 +400,8 @@ extension BlockerServer {
     }
     
     // 게시글 수정
-    func patchPost(_ post:EditedPost, completionHandler: @escaping (Bool, Int) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(post.boardId)")!)
+    func patchPost(_ post:EditedPost, _ boardId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/\(boardId)")!)
         request.httpMethod = "PATCH"
         
         // header
@@ -472,7 +473,7 @@ extension BlockerServer {
         // body -> 이미지 파일
         let httpBody = NSMutableData()
         httpBody.append(convertFileData(fieldName: "image",
-                                        fileName: "\(self.userData.email)_signature.png",
+                                        fileName: "\(image.hash).png",
                                         mimeType: "image/png",
                                         fileData: image.pngData()!,
                                         using: boundary))
@@ -485,23 +486,17 @@ extension BlockerServer {
                 print(e.localizedDescription)
                 return
             }
-
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                if response.statusCode == 200 {
+                if response.statusCode == 201 {
                     let res = try? JSONDecoder().decode(SaveImageResponseData.self, from: data!)
-                    completionHandler(true, 200, res?.address ?? "fail")
-                } else if response.statusCode == 200 { // 파일 안 보냄
-                    completionHandler(false, 204, "fail")
+                    completionHandler(true, 201, res?.address ?? "fail")
                 } else if response.statusCode == 401 { // 토큰 만료
                     completionHandler(false, 401, "fail")
                 } else if response.statusCode == 403 { // 전자서명 저장 실패
                     completionHandler(false, 403, "fail")
-                } else if response.statusCode == 500 { // INTERNAL SERVER ERROR
-                    completionHandler(false, 500, "fail")
                 }
             }
-
         }.resume()
     }
 }

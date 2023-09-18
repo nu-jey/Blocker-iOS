@@ -11,12 +11,12 @@ import BSImagePicker
 struct WritePostView: View {
     @State var title:String = ""
     @State var content:String = ""
-    @State var contractTitle:String = "contract"
-    @State var contractId:Int?
+    @State var contractTitle:String? = nil
+    @State var contractId:Int? = nil
     @State var info:String?
-    @State var representImage:UIImage?
     @State var images:[UIImage] = []
     @State private var showModal:Bool = false
+    @StateObject var writePostViewModel:WritePostViewModel = WritePostViewModel()
     var body: some View {
         ZStack {
             VStack {
@@ -30,18 +30,18 @@ struct WritePostView: View {
                 Divider()
                 Group {
                     HStack { // 계약서
-                        Button(action: {showModal = true}) {
+                        Button(action: { showModal = true }) {
                             // 미체결 계약서 목록
                             Text("Load Contract")
                         }
                         .padding(.leading, 20)
                         Spacer()
-                        Text(contractTitle)
+                        Text(contractTitle ?? "not selected")
                             .padding(.trailing, 20)
                         
                     }
                     Divider()
-                    PostImageLoadView(images: images)
+                    PostImageLoadView(images: $images)
                     Divider()
                     PostLocationInfoView()
                     Divider()
@@ -56,10 +56,10 @@ struct WritePostView: View {
                     .padding()
                 Divider()
                 Button("Save") {
-                    print(title, content, info, representImage, contractId, images)
+                    writePostViewModel.writePost(Post(title: title, content: content, info: nil, representImage: nil, contractId: contractId!, images: []), images)
                 }
             }
-            ContractListModalView(isShowing: $showModal)
+            ContractListModalView(contractId: $contractId, contractTitle: $contractTitle, isShowing: $showModal)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -67,7 +67,7 @@ struct WritePostView: View {
 
 struct PostImageLoadView:View {
     @State var isPresentedSheet = false
-    @State var images:[UIImage]
+    @Binding var images:[UIImage]
     var body: some View {
         HStack { // 게시글 이미지
             Button("Load Images") {

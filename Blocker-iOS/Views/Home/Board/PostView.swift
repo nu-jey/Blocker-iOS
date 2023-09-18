@@ -24,7 +24,9 @@ struct PostView: View {
                 }
             }
             Divider()
-            PostImageView(iamgeString: postViewModel.postResponseData?.representImage ?? "")
+            if let data = postViewModel.postResponseData?.images {
+                PostImageView(imageResponseData:data, iamgeType: .PostImage)
+            }
             Divider()
             Spacer()
             Text(postViewModel.postResponseData?.content ?? "none")
@@ -56,20 +58,25 @@ struct PostView: View {
         .onAppear {
             postViewModel.getPostData(boardId)
         }
-    
+        .toolbar {
+            Button(action: { print("123") }) {
+                if postViewModel.postResponseData?.isWriter ?? false {
+                    Image(systemName: "pencil")
+                }
+            }
+        }
     }
 }
+
 struct PostImageView: View {
-    @State var iamgeString:String
-    
+    @State var imageResponseData:[ImageResponseData]
+    @State var iamgeType:BlockerImageType
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                AsyncImageView(iamgeURL: iamgeString)
-                AsyncImageView(iamgeURL: iamgeString)
-                AsyncImageView(iamgeURL: iamgeString)
-                AsyncImageView(iamgeURL: iamgeString)
-                AsyncImageView(iamgeURL: iamgeString)
+                ForEach(imageResponseData, id: \.imageId) { image in
+                    AsyncImageView(imageURL: image.imageAddress, imageType: iamgeType)
+                }
             }
         }
     }
@@ -77,6 +84,6 @@ struct PostImageView: View {
 
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
-        PostView(boardId: 1)
+        PostView(boardId: 27)
     }
 }

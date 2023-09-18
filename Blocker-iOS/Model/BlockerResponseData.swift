@@ -24,16 +24,21 @@ struct PostResponseData:Codable {
     let title:String
     let content:String
     let name:String
-    let representImage:String?
+    let representImage:String
     let view:Int
     let bookmarkCount:Int
     let createdAt:String
     let modifiedAt:String
-    let images:[String]
+    let images:[ImageResponseData]
     let info:String?
     let contractId:Int?
     let isWriter:Bool
     let isBookmark:Bool
+}
+
+struct ImageResponseData:Codable {
+    let imageId:Int
+    let imageAddress:String
 }
 
 struct BlockerPostImage:Codable {
@@ -52,5 +57,4 @@ struct ContractResponseData:Codable {
     let createdAt:String
     let modifiedAt:String
 }
-
 

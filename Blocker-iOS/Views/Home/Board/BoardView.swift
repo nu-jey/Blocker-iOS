@@ -28,7 +28,7 @@ struct BoardCellView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                AsyncImageView(iamgeURL: boardItem.representImage)
+                AsyncImageView(imageURL: boardItem.representImage, imageType: .BoardImage)
             }
             .frame(maxWidth: .infinity)
             .background(Color("defaultImageColor"))
@@ -63,15 +63,23 @@ struct BoardCellView: View {
 }
 
 struct AsyncImageView:View {
-    @State var iamgeURL:String?
+    @State var imageURL:String?
+    @State var imageType:BlockerImageType
     var body: some View {
-        AsyncImage(url: URL(string:iamgeURL ?? ""))
+        AsyncImage(url: URL(string:imageURL ?? ""))
         { phase in
             if let image = phase.image {
-                image // Displays the loaded image.
-                    .resizable()
-                    .frame(height: 100)
-                    .cornerRadius(20, corners: [.topLeft, .topRight])
+                if imageType == .BoardImage {
+                    image // Displays the loaded image.
+                        .resizable()
+                        .frame(height: 100)
+                        .cornerRadius(20, corners: [.topLeft, .topRight])
+                } else if imageType == .PostImage {
+                    image // Displays the loaded image.
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .cornerRadius(20, corners: [.allCorners])
+                }
             } else if phase.error != nil {
                 Color.white // Acts as a placeholder.
             } else {
@@ -81,6 +89,7 @@ struct AsyncImageView:View {
         }
     }
 }
+
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         // BoardView()

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C2092B192A94F6F600F8DEBE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2092B182A94F6F600F8DEBE /* Utils.swift */; };
+		C221B7A12AB746880006037E /* WritePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C221B7A02AB746880006037E /* WritePostViewModel.swift */; };
 		C2233BD62A6B6CCD00A9BA8F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD52A6B6CCD00A9BA8F /* GoogleSignIn */; };
 		C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */; };
 		C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */; };
@@ -58,6 +59,7 @@
 
 /* Begin PBXFileReference section */
 		C2092B182A94F6F600F8DEBE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		C221B7A02AB746880006037E /* WritePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostViewModel.swift; sourceTree = "<group>"; };
 		C2233BDB2A6BB7F500A9BA8F /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		C2233BDE2A6BF09F00A9BA8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				C2AFF6992AB0966D0074985D /* ContractsViewModel.swift */,
 				C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */,
 				C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */,
+				C221B7A02AB746880006037E /* WritePostViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				C27475472A50222700610385 /* MainView.swift in Sources */,
 				C2092B192A94F6F600F8DEBE /* Utils.swift in Sources */,
 				C26D47282A54137400137380 /* SignView.swift in Sources */,
+				C221B7A12AB746880006037E /* WritePostViewModel.swift in Sources */,
 				C28235202A9F9A0D009054D4 /* Contract.swift in Sources */,
 				C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */,
 				C2930DF32A517B43002E06AA /* ContractsView.swift in Sources */,

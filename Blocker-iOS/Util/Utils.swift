@@ -50,3 +50,8 @@ struct RoundedCorner: Shape {
     return Path(path.cgPath)
   }
 }
+
+enum BlockerImageType {
+    case BoardImage
+    case PostImage
+}

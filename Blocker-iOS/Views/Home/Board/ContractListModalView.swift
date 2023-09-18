@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContractListModalView: View {
+    @Binding var contractId:Int?
+    @Binding var contractTitle:String?
     @Binding var isShowing:Bool
     @State private var curHeight:CGFloat = 400
     @State private var isDragging = false
+    @StateObject var contractsViewModel:ContractsViewModel = ContractsViewModel()
     let minHeight:CGFloat = 400
     let maxHeight:CGFloat = 700
     
@@ -36,11 +39,13 @@ struct ContractListModalView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .ignoresSafeArea()
         .animation(isDragging ? nil : .easeInOut(duration: 0.45))
-        
+        .onAppear {
+            contractsViewModel.getContractListResponseData(.notSigned)
+        }
     }
 
     var contentView: some View {
-        VStack {
+        return VStack {
             ZStack {
                 Capsule()
                     .frame(width: 40, height: 6)
@@ -51,7 +56,15 @@ struct ContractListModalView: View {
             .gesture(dragGesture)
             ZStack {
                 VStack {
-                    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                    List(contractsViewModel.notSigendContractListResponseData, id: \.contractId) { contarct in
+                        Button(contarct.title) {
+                            print(contarct.title)
+                            self.contractId = contarct.contractId
+                            self.contractTitle = contarct.title
+                            isShowing = false
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
             }
             
@@ -66,6 +79,7 @@ struct ContractListModalView: View {
             }
             .foregroundColor(.white)
         )
+        
     }
     
     @State private var prevDrageTranslation = CGSize.zero
@@ -90,7 +104,8 @@ struct ContractListModalView: View {
                 if curHeight > maxHeight {
                     curHeight = maxHeight
                 } else if curHeight < minHeight {
-                    curHeight = minHeight
+                    // curHeight = minHeight
+                    isShowing = false
                 }
             }
     }
@@ -99,6 +114,6 @@ struct ContractListModalView: View {
 struct ContractListModalView_Previews: PreviewProvider {
     static var previews: some View {
         //ContractListModalView(isShowing: .constant(false))
-        WritePostView(representImage: nil)
+        WritePostView()
     }
 }
