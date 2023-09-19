@@ -8,11 +8,12 @@
 import Foundation
 import UIKit
 class WritePostViewModel:ObservableObject {
-    func writePost(_ post:Post, _ imgaes:[UIImage])  {
-        var imageValue = saveImages(imgaes)
-        post.images = imageValue
-        post.representImage = imageValue.first!
-        print("---------이미지 변환----------")
+    func writePost(_ post:Post, _ images:[UIImage])  {
+        var imageValue = saveImages(images)
+        if !images.isEmpty {
+            post.images = imageValue
+            post.representImage = imageValue.first!
+        }
         BlockerServer.shared.wirtePost(post) { state, statusCode in
             if state {
                 

@@ -26,11 +26,21 @@ class PostViewModel: ObservableObject {
         }
     }
     
+    func deletePost(_ boardId:Int) {
+        BlockerServer.shared.deletePost(boardId) { state, statusCode in
+            if !state {
+                
+            }
+        }
+    }
+    
     func addBookmark(_ boardId: Int) {
         var alreadyAdded:Bool = false
         BlockerServer.shared.addBookmark(boardId) { state, statusCode in
             if state {
-                print("등록 성공")
+                DispatchQueue.main.async {
+                    self.postResponseData?.isBookmark = true
+                }
             } else {
                 print("등록 실패: \(statusCode)")
                 if statusCode == 401 {
@@ -48,7 +58,9 @@ class PostViewModel: ObservableObject {
     func deleteBookmark(_ boardId: Int) {
         BlockerServer.shared.deleteBookmark(boardId) { state, statusCode in
             if state {
-                print("삭제 성공")
+                DispatchQueue.main.async {
+                    self.postResponseData?.isBookmark = false
+                }
             } else {
                 print("삭제 실패: \(statusCode)")
                 if statusCode == 401 {

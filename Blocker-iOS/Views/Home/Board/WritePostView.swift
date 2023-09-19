@@ -17,6 +17,7 @@ struct WritePostView: View {
     @State var images:[UIImage] = []
     @State private var showModal:Bool = false
     @StateObject var writePostViewModel:WritePostViewModel = WritePostViewModel()
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         ZStack {
             VStack {
@@ -57,6 +58,7 @@ struct WritePostView: View {
                 Divider()
                 Button("Save") {
                     writePostViewModel.writePost(Post(title: title, content: content, info: nil, representImage: nil, contractId: contractId!, images: []), images)
+                    dismiss()
                 }
             }
             ContractListModalView(contractId: $contractId, contractTitle: $contractTitle, isShowing: $showModal)

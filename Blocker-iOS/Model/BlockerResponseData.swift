@@ -33,7 +33,7 @@ struct PostResponseData:Codable {
     let info:String?
     let contractId:Int?
     let isWriter:Bool
-    let isBookmark:Bool
+    var isBookmark:Bool
 }
 
 struct ImageResponseData:Codable {
@@ -41,10 +41,6 @@ struct ImageResponseData:Codable {
     let imageAddress:String
 }
 
-struct BlockerPostImage:Codable {
-    let imageId:Int
-    let imageAddress:String
-}
 
 struct SaveImageResponseData:Codable {
     let address:String
