@@ -40,7 +40,7 @@ struct PostView: View {
                 Divider()
                 if let data = postViewModel.postResponseData?.images {
                     Divider()
-                    PostImageView(imageResponseData:data, iamgeType: .PostImage)
+                    PostImageView(imageResponseData:data, imageType: .PostImage)
                 }
                 Divider()
                 VStack(alignment: .leading) {
@@ -78,11 +78,6 @@ struct PostView: View {
                         } label: {
                             Label("Edit", systemImage: "pencil.circle")
                         }
-                        
-                        NavigationLink(destination: WritePostView()) {
-                            Label("Edit", systemImage: "pencil.circle")
-                        }
-                        
                         Button(action: {
                             postViewModel.deletePost(postViewModel.postResponseData!.boardId)
                             dismiss()
@@ -106,21 +101,22 @@ struct PostView: View {
                 Image(systemName: "ellipsis.circle.fill")
             }
             .background(
-                NavigationLink(destination:WritePostView(title: postViewModel.postResponseData?.title ?? "", content: postViewModel.postResponseData?.content ?? ""), isActive: $isShowingEditPost) {
+                NavigationLink(destination: EditPostView(title: postViewModel.postResponseData?.title ?? "", content: postViewModel.postResponseData?.content ?? "", contractId: postViewModel.postResponseData?.contractId, editingPost: postViewModel.postResponseData), isActive: $isShowingEditPost) {
                     EmptyView()
-                })
+                }
+            )
         }
     }
 }
 
 struct PostImageView: View {
     @State var imageResponseData:[ImageResponseData]
-    @State var iamgeType:BlockerImageType
+    @State var imageType:BlockerImageType
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
                 ForEach(imageResponseData, id: \.imageId) { image in
-                    AsyncImageView(imageURL: image.imageAddress, imageType: iamgeType)
+                    AsyncImageView(imageURL: image.imageAddress, imageType: .PostImage)
                 }
             }
         }

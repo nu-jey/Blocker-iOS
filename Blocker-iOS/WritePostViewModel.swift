@@ -14,7 +14,7 @@ class WritePostViewModel:ObservableObject {
             post.images = imageValue
             post.representImage = imageValue.first!
         }
-        BlockerServer.shared.wirtePost(post) { state, statusCode in
+        BlockerServer.shared.writePost(post) { state, statusCode in
             if state {
                 
             } else {
@@ -36,5 +36,20 @@ class WritePostViewModel:ObservableObject {
         }
         print("이미지 변환:\(res)")
         return res
+    }
+    
+    func patchPost(_ post:EditedPost, _ images:[UIImage], _ boardId:Int)  {
+        var imageValue = saveImages(images)
+        if !images.isEmpty {
+            post.images = imageValue
+            post.representImage = imageValue.first!
+        }
+        BlockerServer.shared.patchPost(post, boardId) { state, statusCode in
+            if state {
+                
+            } else {
+                
+            }
+        }
     }
 }

@@ -71,14 +71,33 @@ struct PostImageLoadView:View {
     @State var isPresentedSheet = false
     @Binding var images:[UIImage]
     var body: some View {
-        HStack { // 게시글 이미지
-            Button("Load Images") {
-                self.isPresentedSheet = true
-            } .fullScreenCover(isPresented: self.$isPresentedSheet, content: {
-                ImagePickerCoordinatorView(images: $images)
-            })
+        VStack{
+            HStack { // 게시글 이미지
+                Button("Load Images") {
+                    self.isPresentedSheet = true
+                } .fullScreenCover(isPresented: self.$isPresentedSheet, content: {
+                    ImagePickerCoordinatorView(images: $images)
+                })
+            }
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(images, id: \.self) { image in
+                        ZStack(alignment: .topTrailing) {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .cornerRadius(10, corners: .allCorners)
+                            Button(action: {
+                                images.remove(at: images.firstIndex(of: image)!)
+                            }) {
+                                Image(systemName: "x.circle.fill")
+                            }
+                        }
+                    }
+                }
+            }
             Button("Image Data") {
-                print(images)
+                print(images.map { $0 })
             }
         }
     }

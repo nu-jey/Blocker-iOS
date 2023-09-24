@@ -41,6 +41,8 @@
 		C2AFF69A2AB0966D0074985D /* ContractsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AFF6992AB0966D0074985D /* ContractsViewModel.swift */; };
 		C2AFF69C2AB0A8C40074985D /* NotSignedContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */; };
 		C2AFF69E2AB0ABAE0074985D /* WrtieContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */; };
+		C2B71AB92ABC64A8008CBE8A /* EditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71AB82ABC64A8008CBE8A /* EditPostView.swift */; };
+		C2B71ABB2ABC6E4D008CBE8A /* EidtPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71ABA2ABC6E4D008CBE8A /* EidtPostViewModel.swift */; };
 		C2BC5E782A56F68200D79E44 /* WriteContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC5E772A56F68200D79E44 /* WriteContractView.swift */; };
 		C2BD9A822A99B49E005D3ABC /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */; };
 		C2C48BA82AAA0D4000BDC266 /* Blocker++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */; };
@@ -90,6 +92,8 @@
 		C2AFF6992AB0966D0074985D /* ContractsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsViewModel.swift; sourceTree = "<group>"; };
 		C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSignedContractViewModel.swift; sourceTree = "<group>"; };
 		C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrtieContractViewModel.swift; sourceTree = "<group>"; };
+		C2B71AB82ABC64A8008CBE8A /* EditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostView.swift; sourceTree = "<group>"; };
+		C2B71ABA2ABC6E4D008CBE8A /* EidtPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EidtPostViewModel.swift; sourceTree = "<group>"; };
 		C2BC5E772A56F68200D79E44 /* WriteContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteContractView.swift; sourceTree = "<group>"; };
 		C2BD9A812A99B49E005D3ABC /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C2C48BA72AAA0D4000BDC266 /* Blocker++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Blocker++Bundle.swift"; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 				C2AFF69B2AB0A8C40074985D /* NotSignedContractViewModel.swift */,
 				C2AFF69D2AB0ABAE0074985D /* WrtieContractViewModel.swift */,
 				C221B7A02AB746880006037E /* WritePostViewModel.swift */,
+				C2B71ABA2ABC6E4D008CBE8A /* EidtPostViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 				C282351A2A9F8602009054D4 /* ImagePicker.swift */,
 				C235174A2AA224E600EA1250 /* PostcodeServiceView.swift */,
 				C2D647912AB32FF400681AD2 /* ContractListModalView.swift */,
+				C2B71AB82ABC64A8008CBE8A /* EditPostView.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -381,11 +387,13 @@
 				C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */,
 				C2930DF32A517B43002E06AA /* ContractsView.swift in Sources */,
 				C27475492A504D9000610385 /* SideMenuView.swift in Sources */,
+				C2B71AB92ABC64A8008CBE8A /* EditPostView.swift in Sources */,
 				C25E2FC42A4EB2E90069A8C0 /* Blocker_iOSApp.swift in Sources */,
 				C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */,
 				C2F5536A2A5585FC00438D48 /* ContractView.swift in Sources */,
 				C2D647922AB32FF400681AD2 /* ContractListModalView.swift in Sources */,
 				C2930DF92A519A54002E06AA /* BoardView.swift in Sources */,
+				C2B71ABB2ABC6E4D008CBE8A /* EidtPostViewModel.swift in Sources */,
 				C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */,
 				C2FB20542A961C3F00CB7A3B /* SignViewModel.swift in Sources */,
 				C2AFF69A2AB0966D0074985D /* ContractsViewModel.swift in Sources */,

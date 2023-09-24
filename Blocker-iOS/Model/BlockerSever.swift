@@ -323,7 +323,7 @@ extension BlockerServer {
     }
     
     // 게시글 작성
-    func wirtePost(_ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
+    func writePost(_ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/boards")!)
         request.httpMethod = "POST"
         
