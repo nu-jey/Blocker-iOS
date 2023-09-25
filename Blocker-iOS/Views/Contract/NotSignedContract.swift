@@ -31,7 +31,7 @@ struct NotSignedContract: View {
                 .background(Color("subBackgroundColor"))
                 .cornerRadius(5)
                 .fullScreenCover(isPresented: $contractorsModalControl) {
-                    ProceedContractView()
+                    ProceedContractView(contractId: $contractId)
                 }
             }
             .padding()
@@ -58,12 +58,15 @@ struct NotSignedContract: View {
         }
     }
 }
+
 struct ProceedContractView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var keyword:String = ""
     @State var searchData:[String] = ["123", "456", "789"]
     @State var partnerData:[String] = ["abc", "def", "ghi"]
     @State var contractors:[String] = []
+    @Binding var contractId:Int
+    @StateObject var proceedContractViewModel:ProceedContractViewModel = ProceedContractViewModel()
     var body: some View {
         VStack {
             ZStack(alignment: .topTrailing) {
@@ -72,7 +75,7 @@ struct ProceedContractView: View {
                     .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(10)
                     .onSubmit {
-                        print(keyword)
+                        proceedContractViewModel.searchUser(keyword)
                     }
                 Button(action: {
                     // 파트너 리스트 불러오기
@@ -93,7 +96,7 @@ struct ProceedContractView: View {
                         }
                     }
                     Button(action: {
-                        print("계약 진행")
+                        proceedContractViewModel.proceedContract(contractId, contractors)
                     }) {
                         ZStack {
                             Capsule()
@@ -171,6 +174,6 @@ struct ContractorCell:View {
 struct NotSignedContract_Previews: PreviewProvider {
     static var previews: some View {
         // NotSignedContract(contractId: 3)
-        ProceedContractView()
+        ProceedContractView(contractId: .constant(1))
     }
 }

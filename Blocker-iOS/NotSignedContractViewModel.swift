@@ -9,7 +9,6 @@ import Foundation
 
 class NotSignedContractViewModel:ObservableObject {
     @Published var notSignedContractResponseData:ContractResponseData?
-    
     func getNotSignedContract(_ contractId: Int) {
         BlockerServer.shared.getContractData(contractId) { state, statucCode, data in
             if state {
@@ -33,4 +32,5 @@ class NotSignedContractViewModel:ObservableObject {
             
         }
     }
+    
 }

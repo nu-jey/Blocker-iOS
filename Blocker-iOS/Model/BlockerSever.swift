@@ -640,7 +640,7 @@ extension BlockerServer {
     }
     
     func getContractListData(_ contractType:ContractType, completionHandler: @escaping (Bool, Int, [ContractResponseData]) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=NOT_CONCLUDED")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=NOT_PROCEED")!)
         request.httpMethod = "GET"
         
         // header
@@ -667,3 +667,71 @@ extension BlockerServer {
         }.resume()
     }
 }
+
+// 미체결 계약서
+extension BlockerServer {
+    func searchUser(_ keyword:String, completionHandler: @escaping (Bool, Int, [UserResponseData]) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/users/search?keyword=\(keyword)")!)
+        request.httpMethod = "GET"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode([UserResponseData].self, from: data!)
+                    completionHandler(true, 200, res ?? [])
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401, [])
+                }
+            }
+        }.resume()
+    }
+    
+    func proceedContract(_ contractId:Int, _ contractors:[String], completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/signs")!)
+        request.httpMethod = "POST"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // body
+        let body = [
+            "contractId": contractId,
+            "contractors": contractors
+        ] as [String: Any]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error creating JSON data")
+        }
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 401 {
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                }
+            }
+        }.resume()
+    }
+}
+

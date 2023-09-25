@@ -8,6 +8,7 @@
 import Foundation
 
 import Foundation
+
 extension Bundle {
     var host: String? {
         guard let file = self.path(forResource: "Host", ofType: "plist") else { return "" }
@@ -15,5 +16,4 @@ extension Bundle {
         guard let key = resource["Host"] as? String else { fatalError("error")}
         return key
     }
-    
 }

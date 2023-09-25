@@ -54,3 +54,8 @@ struct ContractResponseData:Codable {
     let modifiedAt:String
 }
 
+struct UserResponseData:Codable {
+    let email:String
+    let name:String
+    let picture:String
+}
