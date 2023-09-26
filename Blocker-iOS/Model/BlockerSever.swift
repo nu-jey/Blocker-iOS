@@ -236,7 +236,7 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     let res = try? JSONDecoder().decode(PostResponseData.self, from: data!)
-                    print(response)
+                    print(res)
                     completionHandler(true, 200, res)
                 } else if response.statusCode == 401 {
                     completionHandler(false, 401, nil)
@@ -324,6 +324,7 @@ extension BlockerServer {
     
     // 게시글 작성
     func writePost(_ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
+    
         var request = URLRequest(url: URL(string: "\(self.host)/boards")!)
         request.httpMethod = "POST"
         
@@ -531,7 +532,6 @@ extension BlockerServer {
             }
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
                 if response.statusCode == 200 {
                     completionHandler(true, 200)
                 } else if response.statusCode == 401 {
@@ -688,6 +688,7 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     let res = try? JSONDecoder().decode([UserResponseData].self, from: data!)
+                    print(res)
                     completionHandler(true, 200, res ?? [])
                 } else if response.statusCode == 401 {
                     completionHandler(false, 401, [])

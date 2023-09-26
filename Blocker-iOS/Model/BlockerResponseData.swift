@@ -24,7 +24,7 @@ struct PostResponseData:Codable {
     let title:String
     let content:String
     let name:String
-    let representImage:String
+    let representImage:String?
     let view:Int
     let bookmarkCount:Int
     let createdAt:String
@@ -54,7 +54,7 @@ struct ContractResponseData:Codable {
     let modifiedAt:String
 }
 
-struct UserResponseData:Codable {
+struct UserResponseData:Codable, Equatable {
     let email:String
     let name:String
     let picture:String
