@@ -96,9 +96,6 @@ struct PostImageLoadView:View {
                     }
                 }
             }
-            Button("Image Data") {
-                print(images.map { $0 })
-            }
         }
     }
 }

@@ -101,7 +101,7 @@ struct PostView: View {
                 Image(systemName: "ellipsis.circle.fill")
             }
             .background(
-                NavigationLink(destination: EditPostView(title: postViewModel.postResponseData?.title ?? "", content: postViewModel.postResponseData?.content ?? "", contractId: postViewModel.postResponseData?.contractId, editingPost: postViewModel.postResponseData), isActive: $isShowingEditPost) {
+                NavigationLink(destination: EditPostView(editingPost: postViewModel.postResponseData) ?? nil, isActive: $isShowingEditPost) {
                     EmptyView()
                 }
             )
