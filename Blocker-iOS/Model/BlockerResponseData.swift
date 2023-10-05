@@ -59,3 +59,17 @@ struct UserResponseData:Codable, Equatable {
     let name:String
     let picture:String
 }
+
+struct SigningContractResponseData:Codable {
+    let contractId:Int
+    let title:String
+    let content:String
+    let createdAt:String
+    let modifiedAt:String
+    let signData:[SignInfoResponseData]
+}
+
+struct SignInfoResponseData:Codable {
+    let contractor:String
+    let signState:Bool
+}

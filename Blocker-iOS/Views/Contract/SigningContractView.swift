@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct SigningContractView: View {
+    @State var contractId:Int
     @State var title:String = "title"
     @State var content:String = "content"
     @State var writer:String = "writer"
     @State var contractors:[String] = ["contractor1", "contractor2", "contractor3", "contractor4" ]
-    
+    @StateObject var signingContractViewModel:SigningContractViewModel = SigningContractViewModel()
     var body: some View {
         VStack {
             Text(title)
@@ -28,6 +29,7 @@ struct SigningContractView: View {
             HStack {
                 Button("Sign") {
                     // 전자 서명
+                    signingContractViewModel.signOnContract(contractId)
                 }
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)
@@ -104,6 +106,6 @@ struct ContractorsSignView: View {
 }
 struct SigningContractView_Previews: PreviewProvider {
     static var previews: some View {
-        SigningContractView()
+        SigningContractView(contractId: 0)
     }
 }

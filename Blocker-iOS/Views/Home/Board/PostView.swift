@@ -116,7 +116,9 @@ struct PostImageView: View {
         ScrollView(.horizontal) {
             HStack {
                 ForEach(imageResponseData, id: \.imageId) { image in
-                    AsyncImageView(imageURL: image.imageAddress, imageType: .PostImage)
+                    Button(action: { print(image.imageAddress)}) {
+                        AsyncImageView(imageURL: image.imageAddress, imageType: .PostImage)
+                    }
                 }
             }
         }

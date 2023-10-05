@@ -22,10 +22,15 @@ struct HomeView: View {
             }
             VStack {
                 NavigationLink(destination: WritePostView()) {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(Color("signatureColor1"))
+                    ZStack {
+                        Circle()
+                            .foregroundColor(.black)
+                            .frame(width: 50, height: 50)
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(Color("signatureColor1"))
+                    }
                 }
                 .padding()
             }

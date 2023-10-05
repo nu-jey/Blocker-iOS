@@ -122,10 +122,12 @@ extension BlockerServer {
         self.refreshToken = ""
         self.accessToken = ""
     }
+    
 }
 
 // 전자 서명
 extension BlockerServer {
+    
     func convertFileData(fieldName: String, fileName: String, mimeType: String, fileData: Data, using boundary: String) -> Data {
       let data = NSMutableData()
 
@@ -164,7 +166,6 @@ extension BlockerServer {
                 print(e.localizedDescription)
                 return
             }
-
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
@@ -180,9 +181,9 @@ extension BlockerServer {
                     completionHandler(false, 500)
                 }
             }
-
         }.resume()
     }
+    
 }
 
 // 게시판 & 게시글
@@ -413,39 +414,40 @@ extension BlockerServer {
         let body = [
             "title": "\(post.title)",
             "content": "\(post.content)",
-            "info": "\(post.info ?? "")",
+            "info": "\(post.info ?? nil)",
             "representImage": "\(post.representImage ?? "")",
             "contractId": "\(post.contractId)",
             "deleteImageIds": "\(convertListToString(post.deleteImageIds.map { String($0) }))",
             "addImageAddresses": "\(convertListToString(post.addImageAddresses))"
         ] as [String: Any]
+        print(body)
         
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-        } catch {
-            print("Error creating JSON data")
-        }
-        
-        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
-            // error 체크
-            if let e = error {
-                print(e.localizedDescription)
-                return
-            }
-            // response의 상태코드 따라 분기 처리
-            if let response = response as? HTTPURLResponse {
-                print(response)
-                if response.statusCode == 200 {
-                    completionHandler(true, 200)
-                } else if response.statusCode == 401 {
-                    completionHandler(false, 401)
-                } else if response.statusCode == 403 {
-                    completionHandler(false, 403)
-                } else if response.statusCode == 404 {
-                    completionHandler(false, 404)
-                }
-            }
-        }.resume()
+//        do {
+//            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+//        } catch {
+//            print("Error creating JSON data")
+//        }
+//        
+//        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+//            // error 체크
+//            if let e = error {
+//                print(e.localizedDescription)
+//                return
+//            }
+//            // response의 상태코드 따라 분기 처리
+//            if let response = response as? HTTPURLResponse {
+//                print(response)
+//                if response.statusCode == 200 {
+//                    completionHandler(true, 200)
+//                } else if response.statusCode == 401 {
+//                    completionHandler(false, 401)
+//                } else if response.statusCode == 403 {
+//                    completionHandler(false, 403)
+//                } else if response.statusCode == 404 {
+//                    completionHandler(false, 404)
+//                }
+//            }
+//        }.resume()
     }
     
     func convertListToString(_ list: [String]) -> String {
@@ -640,7 +642,7 @@ extension BlockerServer {
     }
     
     func getContractListData(_ contractType:ContractType, completionHandler: @escaping (Bool, Int, [ContractResponseData]) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=NOT_PROCEED")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=\(contractType)")!)
         request.httpMethod = "GET"
         
         // header
@@ -736,3 +738,101 @@ extension BlockerServer {
     }
 }
 
+// 진행 중 계약서
+extension BlockerServer {
+    func signOnContract(_ contractId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/signs/contract/\(contractId)")!)
+        request.httpMethod = "PATCH"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                print(response)
+                print(data)
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 201 { // 파일 안 보냄
+                    completionHandler(false, 204)
+                } else if response.statusCode == 401 { // 토큰 만료
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 { // 전자서명 저장 실패
+                    completionHandler(false, 403)
+                } else if response.statusCode == 500 { // INTERNAL SERVER ERROR
+                    completionHandler(false, 500)
+                }
+            }
+            
+        }.resume()
+    }
+    
+    func cancelSigningContract(_ contractId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/signs/contract/\(contractId)")!)
+        request.httpMethod = "DELETE"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    completionHandler(true, 200)
+                } else if response.statusCode == 400 { // 진행 중 계약서가 아님
+                    completionHandler(false, 400)
+                } else if response.statusCode == 401 { // 토큰 만료
+                    completionHandler(false, 401)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403)
+                } else if response.statusCode == 404 { //
+                    completionHandler(false, 404)
+                }
+            }
+            
+        }.resume()
+    }
+    
+    func getSigningContractData(contractId:Int, completionHandler: @escaping (Bool, Int, SigningContractResponseData?) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts/proceed/\(contractId)")!)
+        request.httpMethod = "GET"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            // error 체크
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            // response의 상태코드 따라 분기 처리
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode(SigningContractResponseData.self, from: data!)
+                    completionHandler(true, 200, res)
+                } else if response.statusCode == 401 { // 토큰 만료
+                    completionHandler(false, 401, nil)
+                } else if response.statusCode == 403 {
+                    completionHandler(false, 403, nil)
+                }
+            }
+        }.resume()
+    }
+}

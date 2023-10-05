@@ -60,7 +60,7 @@ struct ContractListView: View {
                     }
                 } else if selectedContractTab == 1 {
                     ForEach(contractsViewModel.signingContractListResponseData, id: \.title) { item in
-                        NavigationLink(destination: SigningContractView()) {
+                        NavigationLink(destination: SigningContractView(contractId: item.contractId)) {
                             SigningContractCell(title: item.title)
                         }
                     }
@@ -74,6 +74,7 @@ struct ContractListView: View {
             }
             .onAppear {
                 contractsViewModel.getContractListResponseData(contractType)
+                print(contractType)
             }
             if selectedContractTab == 0 {
                 VStack {

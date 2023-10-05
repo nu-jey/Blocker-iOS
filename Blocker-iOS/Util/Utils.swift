@@ -23,12 +23,6 @@ enum SignInState {
   case signautreNeeded
 }
 
-// 계약서 상태
-enum ContractType {
-    case notSigned
-    case signing
-    case signed
-}
 
 extension View {
   func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {

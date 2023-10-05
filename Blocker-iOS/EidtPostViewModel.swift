@@ -9,15 +9,7 @@ import Foundation
 import UIKit
 
 class EidtPostViewModel:ObservableObject {
-    
     func patchPost(_ editedPost: EditedPost, _ boardId: Int, _ newImages: [UIImage]) {
-        print("________")
-        print(editedPost.deleteImageIds)
-        print(boardId)
-        print(newImages)
-        print("________")
-        
-        
         let dispatchGroup = DispatchGroup()
         if !newImages.isEmpty {
             for image in newImages {
@@ -34,6 +26,8 @@ class EidtPostViewModel:ObservableObject {
         }
         
         dispatchGroup.notify(queue: .main) {
+            print("----")
+            print(editedPost.addImageAddresses)
             BlockerServer.shared.patchPost(editedPost, boardId) { state, statusCode in
                 if state {
     
