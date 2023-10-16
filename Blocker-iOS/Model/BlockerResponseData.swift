@@ -8,15 +8,16 @@
 import Foundation
 
 struct BoardResponseData:Codable {
-    let boardId:Int!
-    let title:String!
-    let name:String!
-    let content:String!
-    let representImage:String!
-    let view:Int!
-    let bookmarkCount:Int!
-    let createdAt:String!
-    let modifiedAt:String!
+    let boardId:Int
+    let title:String
+    let name:String
+    let content:String
+    let representImage:String?
+    let view:Int
+    let bookmarkCount:Int
+    let contractState:String?
+    let createdAt:String
+    let modifiedAt:String
 }
 
 struct PostResponseData:Codable {
@@ -66,10 +67,10 @@ struct SigningContractResponseData:Codable {
     let content:String
     let createdAt:String
     let modifiedAt:String
-    let signData:[SignInfoResponseData]
+    let contractorAndSignStates:[ContractorAndSignStates]
 }
 
-struct SignInfoResponseData:Codable {
+struct ContractorAndSignStates:Codable {
     let contractor:String
-    let signState:Bool
+    let signState:String
 }

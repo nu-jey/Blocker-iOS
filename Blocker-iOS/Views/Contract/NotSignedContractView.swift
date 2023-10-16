@@ -1,5 +1,5 @@
 //
-//  NotSignedContract.swift
+//  NotSignedContractView.swift
 //  Blocker-iOS
 //
 //  Created by 오예준 on 2023/07/08.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NotSignedContract: View {
+struct NotSignedContractView: View {
     @StateObject var  notSignedContractViewModel:NotSignedContractViewModel = NotSignedContractViewModel()
     @State var contractId:Int
     @State var contractorsModalControl:Bool = false
@@ -64,7 +64,7 @@ struct ProceedContractView: View {
     @State var keyword:String = ""
     @State var searchData:[UserResponseData] = []
     @State var partnerData:[UserResponseData] = []
-    @State var contractors:[UserResponseData] = []
+    @State var contractors:[UserResponseData] = [BlockerServer.shared.getOwnData()]
     @Binding var contractId:Int
     @StateObject var proceedContractViewModel:ProceedContractViewModel = ProceedContractViewModel()
     var body: some View {
@@ -85,15 +85,15 @@ struct ProceedContractView: View {
                     Image(systemName: "arrow.left.arrow.right")
                         .frame(width: 50, height: 50)
                 }
-                
             }
             Divider()
             VStack {
                 if !contractors.isEmpty {
-                    HStack {
-                        // 계약참여자 등록 + 계약 진행 상호작용
-                        ForEach(contractors ?? [], id: \.email) { data in
-                            ContractorCell(data: data, contractors: $contractors)
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(contractors ?? [], id: \.email) { data in
+                                ContractorCell(data: data, contractors: $contractors)
+                            }
                         }
                     }
                     Button(action: {
@@ -165,21 +165,27 @@ struct UserSearchCell: View {
 struct ContractorCell:View {
     @State var data:UserResponseData
     @Binding var contractors:[UserResponseData]
+    let tempLabel:UILabel = UILabel()
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            ZStack {
-                Capsule()
-                    .frame(width: 100, height: 30)
-                    .foregroundColor(.blue)
+            Capsule()
+                .frame(height: 30)
+                .foregroundColor(.blue)
+            HStack {
                 Text(data.name)
+                Button(action: {
+                    contractors.remove(at: contractors.firstIndex(where:{ $0 == data })!)
+                }) {
+                    Image(systemName: "x.circle.fill")
+                        .foregroundColor(.red)
+                        .frame(width: 30, height: 30)
+                }
             }
-            Button(action: {
-                contractors.remove(at: contractors.firstIndex(where:{ $0 == data })!)
-            }) {
-                Image(systemName: "x.circle.fill")
-                    .foregroundColor(.red)
-                    .frame(width: 30, height: 30)
-            }
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
+        }
+        .onAppear {
+            tempLabel.text = data.name
         }
     }
 }

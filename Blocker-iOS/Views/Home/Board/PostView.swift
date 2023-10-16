@@ -59,7 +59,7 @@ struct PostView: View {
                     }
                     .padding(.leading, 20)
                     Spacer()
-                    NavigationLink(destination: NotSignedContract(contractId: postViewModel.postResponseData?.contractId ?? 10)) {
+                    NavigationLink(destination: NotSignedContractView(contractId: postViewModel.postResponseData?.contractId ?? 10)) {
                         Text("Imported Contract")
                     }
                     .padding(.trailing, 20)

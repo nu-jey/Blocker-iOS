@@ -93,6 +93,6 @@ struct AsyncImageView:View {
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         // BoardView()
-        BoardCellView(boardItem: BoardResponseData(boardId: 1, title: "Title", name: "123", content: "123", representImage: "123", view: 1, bookmarkCount: 1, createdAt: "1", modifiedAt: "1"))
+        BoardCellView(boardItem: BoardResponseData(boardId: 1, title: "Title", name: "123", content: "123", representImage: "123", view: 1, bookmarkCount: 1, contractState: "PROCEED", createdAt: "1", modifiedAt: "1"))
     }
 }

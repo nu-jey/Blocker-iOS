@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+enum ApiError:Error {
+    case UNAUTHORIZATION
+    case FORBIDDEN
+}
 class BlockerServer {
     var userSignInState:SignInState = .signedOut
     private var refreshToken:String = ""
@@ -27,6 +31,10 @@ class BlockerServer {
         if accessToken != nil {
             self.accessToken = accessToken!
         }
+    }
+    
+    func getOwnData() -> UserResponseData {
+        return UserResponseData(email: self.userData.email, name: self.userData.name, picture: "")
     }
 }
 
@@ -59,7 +67,7 @@ extension BlockerServer {
                 }
             }
         }.resume()
-       
+        
     }
     
     func convertRefreshToken(_ input:String ) -> String {
@@ -129,15 +137,15 @@ extension BlockerServer {
 extension BlockerServer {
     
     func convertFileData(fieldName: String, fileName: String, mimeType: String, fileData: Data, using boundary: String) -> Data {
-      let data = NSMutableData()
-
-      data.appendString("--\(boundary)\r\n")
-      data.appendString("Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(fileName)\"\r\n")
-      data.appendString("Content-Type: \(mimeType)\r\n\r\n")
-      data.append(fileData)
-      data.appendString("\r\n")
-
-      return data as Data
+        let data = NSMutableData()
+        
+        data.appendString("--\(boundary)\r\n")
+        data.appendString("Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(fileName)\"\r\n")
+        data.appendString("Content-Type: \(mimeType)\r\n\r\n")
+        data.append(fileData)
+        data.appendString("\r\n")
+        
+        return data as Data
     }
     
     func updateSignature(_ image: UIImage, completionHandler: @escaping (Bool, Int) -> Void) {
@@ -152,13 +160,13 @@ extension BlockerServer {
         // body -> 이미지 파일
         let httpBody = NSMutableData()
         httpBody.append(convertFileData(fieldName: "signature",
-                                        fileName: "\(self.userData.email)_signature.png",
+                                        fileName: "\(self.userData.email.hash)_signature.png",
                                         mimeType: "image/png",
                                         fileData: image.pngData()!,
                                         using: boundary))
         httpBody.appendString("--\(boundary)--")
         request.httpBody = httpBody as Data
-        
+        print(self.userData.email.hashValue)
         URLSession(configuration: .default).dataTask(with: request) {(data, response, error) in
             print(response)
             // error 체크
@@ -183,14 +191,54 @@ extension BlockerServer {
             }
         }.resume()
     }
-    
+//    func updateSignature(_ image: UIImage, completionHandler: @escaping (Bool, Int) -> Void) {
+//        let imageData = image.pngData()!
+//        var request = URLRequest(url: URL(string: "\(self.host)/signatures")!)
+//        request.httpMethod = "PATCH"
+//
+//        let uniqString = UUID().uuidString
+//        let contentType = "multipart/form-data; boundary=\(uniqString)"
+//        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+//
+//        var body = Data()
+//        body.append("--\(uniqString)\r\n".data(using: .utf8)!)
+//        body.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(image.hash)signature.png\"\r\n".data(using: .utf8)!)
+//        body.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+//        body.append(imageData)
+//        body.append("\r\n".data(using: .utf8)!)
+//        body.append("--\(uniqString)--\r\n".data(using: .utf8)!)
+//
+//        let session = URLSession(configuration: .default)
+//        session.configuration.timeoutIntervalForRequest = TimeInterval(20)
+//        session.configuration.timeoutIntervalForResource = TimeInterval(20)
+//
+//        let task = session.uploadTask(with: request, from: body) { (data, response, error) in
+//            DispatchQueue.main.async {
+//                if let response = response as? HTTPURLResponse {
+//                    if response.statusCode == 200 {
+//                        completionHandler(true, 200)
+//                    } else if response.statusCode == 201 { // 파일 안 보냄
+//                        completionHandler(false, 204)
+//                    } else if response.statusCode == 401 { // 토큰 만료
+//                        completionHandler(false, 401)
+//                    } else if response.statusCode == 403 { // 전자서명 저장 실패
+//                        completionHandler(false, 403)
+//                    } else if response.statusCode == 500 { // INTERNAL SERVER ERROR
+//                        completionHandler(false, 500)
+//                    }
+//                }
+//            }
+//        }
+//
+//        task.resume()
+//    }
 }
 
 // 게시판 & 게시글
 extension BlockerServer {
     // 게시글 불러오기
     func getBoardData(_ size: Int, _ page: Int, completionHandler: @escaping (Bool, Int, [BoardResponseData]) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/boards?size=\(size)&page=\(page)")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/boards?size=\(10)&page=\(page)")!)
         request.httpMethod = "Get"
         
         // header
@@ -325,7 +373,7 @@ extension BlockerServer {
     
     // 게시글 작성
     func writePost(_ post:Post, completionHandler: @escaping (Bool, Int) -> Void) {
-    
+        
         var request = URLRequest(url: URL(string: "\(self.host)/boards")!)
         request.httpMethod = "POST"
         
@@ -337,7 +385,7 @@ extension BlockerServer {
         let body = [
             "content": post.content,
             "title": post.title,
-            "info": post.info ?? nil,
+            "info": post.info ?? "null",
             "representImage": post.representImage ?? nil,
             "contractId": post.contractId,
             "images": post.images
@@ -422,32 +470,32 @@ extension BlockerServer {
         ] as [String: Any]
         print(body)
         
-//        do {
-//            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-//        } catch {
-//            print("Error creating JSON data")
-//        }
-//        
-//        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
-//            // error 체크
-//            if let e = error {
-//                print(e.localizedDescription)
-//                return
-//            }
-//            // response의 상태코드 따라 분기 처리
-//            if let response = response as? HTTPURLResponse {
-//                print(response)
-//                if response.statusCode == 200 {
-//                    completionHandler(true, 200)
-//                } else if response.statusCode == 401 {
-//                    completionHandler(false, 401)
-//                } else if response.statusCode == 403 {
-//                    completionHandler(false, 403)
-//                } else if response.statusCode == 404 {
-//                    completionHandler(false, 404)
-//                }
-//            }
-//        }.resume()
+        //        do {
+        //            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        //        } catch {
+        //            print("Error creating JSON data")
+        //        }
+        //
+        //        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+        //            // error 체크
+        //            if let e = error {
+        //                print(e.localizedDescription)
+        //                return
+        //            }
+        //            // response의 상태코드 따라 분기 처리
+        //            if let response = response as? HTTPURLResponse {
+        //                print(response)
+        //                if response.statusCode == 200 {
+        //                    completionHandler(true, 200)
+        //                } else if response.statusCode == 401 {
+        //                    completionHandler(false, 401)
+        //                } else if response.statusCode == 403 {
+        //                    completionHandler(false, 403)
+        //                } else if response.statusCode == 404 {
+        //                    completionHandler(false, 404)
+        //                }
+        //            }
+        //        }.resume()
     }
     
     func convertListToString(_ list: [String]) -> String {
@@ -468,11 +516,11 @@ extension BlockerServer {
         let boundary = "Boundary-\(UUID().uuidString)"
         var request = URLRequest(url: URL(string: "\(self.host)/images")!)
         request.httpMethod = "POST"
-
+        
         // header
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
-
+        
         // body -> 이미지 파일
         let httpBody = NSMutableData()
         httpBody.append(convertFileData(fieldName: "image",
@@ -614,7 +662,7 @@ extension BlockerServer {
     }
     
     func getContractData(_ contractId:Int, completionHandler: @escaping (Bool, Int, ContractResponseData?) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/contracts/\(contractId)")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts/not-proceed/\(contractId)")!)
         request.httpMethod = "GET"
         
         // header
@@ -630,7 +678,7 @@ extension BlockerServer {
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
-                     let res = try? JSONDecoder().decode(ContractResponseData.self, from: data!)
+                    let res = try? JSONDecoder().decode(ContractResponseData.self, from: data!)
                     completionHandler(true, 200, res)
                 } else if response.statusCode == 401 {
                     completionHandler(false, 401, nil)
@@ -642,7 +690,7 @@ extension BlockerServer {
     }
     
     func getContractListData(_ contractType:ContractType, completionHandler: @escaping (Bool, Int, [ContractResponseData]) -> Void) {
-        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=\(contractType)")!)
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts?state=\(contractType.rawValue)")!)
         request.httpMethod = "GET"
         
         // header
@@ -736,6 +784,32 @@ extension BlockerServer {
             }
         }.resume()
     }
+    
+    func deleteContractAndPost(_ contractId: Int, completionHandler: @escaping (Result<Int, ApiError>) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/contracts/with-boards/\(contractId)")!)
+        request.httpMethod = "Delete"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    completionHandler(.success(200))
+                } else if response.statusCode == 401 {
+                    completionHandler(.failure(.UNAUTHORIZATION))
+                } else if response.statusCode == 403 {
+                    completionHandler(.failure(.FORBIDDEN))
+                }
+            }
+        }.resume()
+    }
 }
 
 // 진행 중 계약서
@@ -757,8 +831,6 @@ extension BlockerServer {
             
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
-                print(response)
-                print(data)
                 if response.statusCode == 200 {
                     completionHandler(true, 200)
                 } else if response.statusCode == 201 { // 파일 안 보냄
@@ -826,6 +898,7 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     let res = try? JSONDecoder().decode(SigningContractResponseData.self, from: data!)
+                    print(res, response)
                     completionHandler(true, 200, res)
                 } else if response.statusCode == 401 { // 토큰 만료
                     completionHandler(false, 401, nil)
@@ -835,4 +908,5 @@ extension BlockerServer {
             }
         }.resume()
     }
+    
 }

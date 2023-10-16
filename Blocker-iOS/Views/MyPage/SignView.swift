@@ -34,7 +34,6 @@ struct SignView: View {
                         print("전자 서명 저장 오류 발생")
                         self.launchViewModel.state = .signedOut
                     }
-                    
                 }
                 .frame(width: 140)
                 .background(Color.yellow)
@@ -49,7 +48,7 @@ struct SignView: View {
     func saveSignatureImage() -> Bool {
         let image = canvasView.drawing.image(from: CGRect(x: 0, y: 0, width: canvasView.frame.width, height: canvasView.frame.height), scale: 1.0)
         let res = signViewModel.updateSign(image)
-        print(res.1)
+        print(res.1, res.0)
         return res.0
     }
 }
