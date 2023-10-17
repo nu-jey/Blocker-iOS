@@ -22,14 +22,43 @@ class NotSignedContractViewModel:ObservableObject {
     }
     
     func deleteNotSignedContract(_ contractId: Int) {
-        BlockerServer.shared.deleteContract(contractId) { state, statusCode in
-            print(statusCode)
-            if state {
-                
-            } else {
-                
+        BlockerServer.shared.deleteContract(contractId) { result in
+            switch result {
+            case .success(let statusCode):
+                print("success: \(statusCode)")
+            case .failure(let APIError):
+                switch APIError {
+                case .BADREQUEST:
+                    print("BADREQUEST")
+                    self.deleteContractAndPost(contractId)
+                case .FORBIDDEN:
+                    print("FORBIDDEN")
+                case .UNAUTHORIZATION:
+                    print("UNAUTHORIZATION")
+                case .NOTFOUND:
+                    print("NOTFOUND")
+                }
             }
-            
+        }
+    }
+    
+    func deleteContractAndPost(_ contractId: Int) {
+        BlockerServer.shared.deleteContractAndPost(contractId) { result in
+            switch result {
+            case .success(let statusCode):
+                print("success: \(statusCode)")
+            case .failure(let APIError):
+                switch APIError {
+                case .BADREQUEST:
+                    print("BADREQUEST")
+                case .FORBIDDEN:
+                    print("FORBIDDEN")
+                case .UNAUTHORIZATION:
+                    print("UNAUTHORIZATION")
+                case .NOTFOUND:
+                    print("NOTFOUND")
+                }
+            }
         }
     }
     

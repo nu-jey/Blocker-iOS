@@ -13,6 +13,8 @@
 		C2233BD82A6B6CCD00A9BA8F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C2233BD72A6B6CCD00A9BA8F /* GoogleSignInSwift */; };
 		C2233BDD2A6BED3200A9BA8F /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */; };
 		C2233BDF2A6BF09F00A9BA8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2233BDE2A6BF09F00A9BA8F /* UserData.swift */; };
+		C22A87462ADEA36B00B28F00 /* SignedContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A87452ADEA36B00B28F00 /* SignedContractViewModel.swift */; };
+		C22A87482ADEC55400B28F00 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A87472ADEC55400B28F00 /* MyPageViewModel.swift */; };
 		C235174B2AA224E600EA1250 /* PostcodeServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C235174A2AA224E600EA1250 /* PostcodeServiceView.swift */; };
 		C23C39E42A8F9170003D5D93 /* BlockerSever.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23C39E32A8F9170003D5D93 /* BlockerSever.swift */; };
 		C23C39E62A8FB11C003D5D93 /* BlockerResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */; };
@@ -67,6 +69,8 @@
 		C2233BDB2A6BB7F500A9BA8F /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		C2233BDC2A6BED3200A9BA8F /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		C2233BDE2A6BF09F00A9BA8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		C22A87452ADEA36B00B28F00 /* SignedContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedContractViewModel.swift; sourceTree = "<group>"; };
+		C22A87472ADEC55400B28F00 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		C235174A2AA224E600EA1250 /* PostcodeServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcodeServiceView.swift; sourceTree = "<group>"; };
 		C23C39E32A8F9170003D5D93 /* BlockerSever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerSever.swift; sourceTree = "<group>"; };
 		C23C39E52A8FB11C003D5D93 /* BlockerResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerResponseData.swift; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 				C2B71ABA2ABC6E4D008CBE8A /* EidtPostViewModel.swift */,
 				C2ED068A2AC1C3C800237EEE /* ProceedContractViewModel.swift */,
 				C29F1EF02ACD9756003519CD /* SigningContractViewModel.swift */,
+				C22A87452ADEA36B00B28F00 /* SignedContractViewModel.swift */,
+				C22A87472ADEC55400B28F00 /* MyPageViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -383,8 +389,10 @@
 			files = (
 				C2930DF72A517C51002E06AA /* HomeView.swift in Sources */,
 				C25E2FC62A4EB2E90069A8C0 /* LaunchView.swift in Sources */,
+				C22A87482ADEC55400B28F00 /* MyPageViewModel.swift in Sources */,
 				C2E1CBDA2A598D690005CA4C /* SignedContractView.swift in Sources */,
 				C2C54B632A58114B006A6082 /* WritePostView.swift in Sources */,
+				C22A87462ADEA36B00B28F00 /* SignedContractViewModel.swift in Sources */,
 				C27475472A50222700610385 /* MainView.swift in Sources */,
 				C2092B192A94F6F600F8DEBE /* Utils.swift in Sources */,
 				C26D47282A54137400137380 /* SignView.swift in Sources */,

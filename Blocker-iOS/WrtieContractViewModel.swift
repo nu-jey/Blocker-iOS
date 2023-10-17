@@ -9,11 +9,12 @@ import Foundation
 
 class WrtieContractViewModel:ObservableObject {
     func writeContract(_ title:String, _ content:String) {
-        BlockerServer.shared.writeContract(title, content) { state, statusCode in
-            if state {
-                
-            } else {
-                
+        BlockerServer.shared.writeContract(title, content) { result in
+            switch result {
+            case .success(let statusCode):
+                print("success")
+            case .failure(let APIError):
+                print("success")
             }
         }
     }

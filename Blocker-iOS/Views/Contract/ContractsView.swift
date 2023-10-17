@@ -66,7 +66,7 @@ struct ContractListView: View {
                     }
                 } else {
                     ForEach(contractsViewModel.signedContractListResponseData, id: \.title) { item in
-                        NavigationLink(destination: SignedContractView()) {
+                        NavigationLink(destination: SignedContractView(contractId: item.contractId)) {
                             SignedContractCell(title: item.title)
                         }
                     }

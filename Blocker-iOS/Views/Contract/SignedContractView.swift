@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct SignedContractView: View {
+    @State var contractId:Int
     @State var title:String = "title"
     @State var content:String = "content"
     @State var writer:String = "writer"
-    
+    @StateObject var signedContractViewModel:SignedContractViewModel = SignedContractViewModel()
     var body: some View {
         VStack {
             Text(title)
@@ -35,6 +36,7 @@ struct SignedContractView: View {
                 .cornerRadius(5)
                 Button("Terminate") {
                     // 계약 파기
+                    signedContractViewModel.cancelSignedContract(contractId)
                 }
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)
@@ -44,11 +46,14 @@ struct SignedContractView: View {
             .padding()
             .frame(height: 100)
         }
+        .onAppear {
+            signedContractViewModel.getContractData(contractId)
+        }
     }
 }
 
 struct SignedContractView_Previews: PreviewProvider {
     static var previews: some View {
-        SignedContractView()
+        SignedContractView(contractId: 1)
     }
 }

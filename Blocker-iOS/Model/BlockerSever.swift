@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 
 enum ApiError:Error {
+    case BADREQUEST
     case UNAUTHORIZATION
     case FORBIDDEN
+    case NOTFOUND
 }
 class BlockerServer {
     var userSignInState:SignInState = .signedOut
@@ -554,7 +556,7 @@ extension BlockerServer {
 
 // 미체결 계약서
 extension BlockerServer {
-    func writeContract(_ title:String, _ content:String, completionHandler: @escaping (Bool, Int) -> Void) {
+    func writeContract(_ title:String, _ content:String, completionHandler: @escaping (Result<Int, ApiError>) -> Void)  {
         var request = URLRequest(url: URL(string: "\(self.host)/contracts")!)
         request.httpMethod = "POST"
         
@@ -583,11 +585,13 @@ extension BlockerServer {
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
-                    completionHandler(true, 200)
+                    completionHandler(.success(200))
+                } else if response.statusCode == 400 {
+                    completionHandler(.failure(.BADREQUEST))
                 } else if response.statusCode == 401 {
-                    completionHandler(false, 401)
+                    completionHandler(.failure(.UNAUTHORIZATION))
                 } else if response.statusCode == 403 {
-                    completionHandler(false, 403)
+                    completionHandler(.failure(.FORBIDDEN))
                 }
             }
         }.resume()
@@ -634,7 +638,7 @@ extension BlockerServer {
         }.resume()
     }
     
-    func deleteContract(_ contractId:Int, completionHandler: @escaping (Bool, Int) -> Void) {
+    func deleteContract(_ contractId:Int, completionHandler: @escaping (Result<Int, ApiError>) -> Void) {
         var request = URLRequest(url: URL(string: "\(self.host)/contracts/\(contractId)")!)
         request.httpMethod = "DELETE"
         
@@ -651,11 +655,13 @@ extension BlockerServer {
             // response의 상태코드 따라 분기 처리
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
-                    completionHandler(true, 200)
+                    completionHandler(.success(200))
+                } else if response.statusCode == 400 {
+                    completionHandler(.failure(.BADREQUEST))
                 } else if response.statusCode == 401 {
-                    completionHandler(false, 401)
+                    completionHandler(.failure(.UNAUTHORIZATION))
                 } else if response.statusCode == 403 {
-                    completionHandler(false, 403)
+                    completionHandler(.failure(.FORBIDDEN))
                 }
             }
         }.resume()
@@ -898,7 +904,6 @@ extension BlockerServer {
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     let res = try? JSONDecoder().decode(SigningContractResponseData.self, from: data!)
-                    print(res, response)
                     completionHandler(true, 200, res)
                 } else if response.statusCode == 401 { // 토큰 만료
                     completionHandler(false, 401, nil)
@@ -909,4 +914,98 @@ extension BlockerServer {
         }.resume()
     }
     
+}
+
+// 체결 계약서
+extension BlockerServer {
+    func cancelSignedContract(_ contractId: Int, completionHandler: @escaping (Result<Int,ApiError>) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/cancel-signs/contract/\(contractId)")!)
+        request.httpMethod = "POST"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    completionHandler(.success(200))
+                } else if response.statusCode == 400 {
+                    completionHandler(.failure(.BADREQUEST))
+                } else if response.statusCode == 401 {
+                    completionHandler(.failure(.UNAUTHORIZATION))
+                } else if response.statusCode == 403 {
+                    completionHandler(.failure(.FORBIDDEN))
+                } else {
+                    completionHandler(.failure(.NOTFOUND))
+                }
+            }
+        }.resume()
+    }
+}
+
+extension BlockerServer {
+    func getMyPost(completionHandler: @escaping (Result<[PostResponseData], ApiError>) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/boards/my-boards")!)
+        request.httpMethod = "GET"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode([PostResponseData].self, from: data!)
+                    completionHandler(.success(res ?? []))
+                } else if response.statusCode == 400 {
+                    completionHandler(.failure(.BADREQUEST))
+                } else if response.statusCode == 401 {
+                    completionHandler(.failure(.UNAUTHORIZATION))
+                } else if response.statusCode == 403 {
+                    completionHandler(.failure(.FORBIDDEN))
+                } else {
+                    completionHandler(.failure(.NOTFOUND))
+                }
+            }
+        }.resume()
+    }
+    
+    func getBookmark(completionHandler: @escaping (Result<[PostResponseData], ApiError>) -> Void) {
+        var request = URLRequest(url: URL(string: "\(self.host)/bookmarks/boards")!)
+        request.httpMethod = "GET"
+        
+        // header
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(self.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession(configuration: .default).dataTask(with: request) { (data, response, error) in
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    let res = try? JSONDecoder().decode([PostResponseData].self, from: data!)
+                    completionHandler(.success(res ?? []))
+                } else if response.statusCode == 400 {
+                    completionHandler(.failure(.BADREQUEST))
+                } else if response.statusCode == 401 {
+                    completionHandler(.failure(.UNAUTHORIZATION))
+                } else if response.statusCode == 403 {
+                    completionHandler(.failure(.FORBIDDEN))
+                } else {
+                    completionHandler(.failure(.NOTFOUND))
+                }
+            }
+        }.resume()
+    }
 }

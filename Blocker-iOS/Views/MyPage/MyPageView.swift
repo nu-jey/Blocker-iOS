@@ -19,6 +19,7 @@ struct MyPageView: View {
 }
 struct ProfileView: View {
     @State var signViewModalControl: Bool = false
+    @StateObject var myPageViewModel:MyPageViewModel = MyPageViewModel()
     let myPost = 1
     let favorites = 2
     var body: some View {
@@ -115,7 +116,10 @@ struct ProfileView: View {
             .cornerRadius(10)
             .ignoresSafeArea()
         }
-        
+        .onAppear {
+            myPageViewModel.getBookmark()
+            myPageViewModel.getMyPost()
+        }
     }
     
 }
@@ -141,15 +145,16 @@ struct ProfileHeaderView: View {
     }
 }
 struct ProfileFooterView: View {
+    let user:UserResponseData = BlockerServer.shared.getOwnData()
     let name: String = "Oh Ye Jun"
     let email: String = "123@123.com"
     var body: some View {
             VStack {
-                Text("\(name)")
+                Text(user.name)
                     .bold()
                     .font(.title)
                     .foregroundColor(Color("textColor"))
-                Text("\(email)")
+                Text(user.email)
                     .font(.body)
                     .foregroundColor(Color("textColor"))
             }

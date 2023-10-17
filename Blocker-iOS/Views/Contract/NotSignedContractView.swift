@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-
 struct NotSignedContractView: View {
     @StateObject var  notSignedContractViewModel:NotSignedContractViewModel = NotSignedContractViewModel()
     @State var contractId:Int
     @State var contractorsModalControl:Bool = false
+    @State var showingAlert:Bool = true
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         VStack {
@@ -48,13 +48,17 @@ struct NotSignedContractView: View {
                     Label("Edit", systemImage: "pencil.circle")
                 }
                 Button(action: {
-                    dismiss()
+                    notSignedContractViewModel.deleteNotSignedContract(contractId)
                 }) {
                     Label("Delete", systemImage: "trash.circle")
                 }
             } label: {
                 Image(systemName: "ellipsis.circle.fill")
             }
+        }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Title"), message: Text("Message"),
+                  dismissButton: .default(Text("Default")))
         }
     }
 }
@@ -192,7 +196,7 @@ struct ContractorCell:View {
 
 struct NotSignedContract_Previews: PreviewProvider {
     static var previews: some View {
-        // NotSignedContract(contractId: 3)
-        ProceedContractView(contractId: .constant(1))
+        NotSignedContractView(contractId: 1)
+        //ProceedContractView(contractId: .constant(1))
     }
 }
