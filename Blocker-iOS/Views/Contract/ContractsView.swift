@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContractsView: View {
     @Binding var sideMenuControl: Bool
-    @State var selectedContractTab: Int = 0
+    @Binding var selectedContractTab: Int
     var body: some View {
         TabView(selection: $selectedContractTab) {
             ContractListView(contractType: .notSigned, selectedContractTab: $selectedContractTab)
@@ -136,7 +136,7 @@ struct SignedContractCell: View {
 
 struct ContractsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContractsView(sideMenuControl: .constant(true))
+        ContractsView(sideMenuControl: .constant(true), selectedContractTab: .constant(0))
     }
 }
 

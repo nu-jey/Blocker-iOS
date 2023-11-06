@@ -11,6 +11,8 @@ import GoogleSignIn
 struct ContentView: View {
     @State var sideMenuControl = false
     @State var selectedMenuTab = 0
+    @State var isCancel = false
+    @State var selectedContractTab = 0
     @EnvironmentObject var laucnViewModel:LaunchViewModel
     var body: some View {
         let drag = DragGesture()
@@ -29,7 +31,7 @@ struct ContentView: View {
         case .signedIn: NavigationView {
                 GeometryReader{ geometry in
                     ZStack(alignment:.leading) {
-                        MainView(sideMenuControl: self.$sideMenuControl, selectedMenuTab: self.$selectedMenuTab)
+                        MainView(sideMenuControl: self.$sideMenuControl, selectedMenuTab: self.$selectedMenuTab, isCancel: self.$isCancel, selectedContractTab: $selectedContractTab)
                             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
                             .offset(x:self.sideMenuControl ? geometry.size.width/2 : 0)
                             .disabled(self.sideMenuControl ? true : false)
@@ -75,6 +77,8 @@ struct ContentView: View {
 struct MainView: View {
     @Binding var sideMenuControl : Bool
     @Binding var selectedMenuTab: Int
+    @Binding var isCancel:Bool
+    @Binding var selectedContractTab: Int
     var body: some View {
         TabView(selection: $selectedMenuTab) {
             HomeView(sideMenuControl: $sideMenuControl)
@@ -83,7 +87,7 @@ struct MainView: View {
             MyPageView(sideMenuControl: $sideMenuControl)
                 .tag(1)
                 .padding(.top, 20)
-            ContractsView(sideMenuControl: $sideMenuControl)
+            ContractsView(sideMenuControl: $sideMenuControl, selectedContractTab: $selectedContractTab)
                 .tag(2)
                 .padding(.top, 20)
             VerificationView(sideMenuControl: $sideMenuControl)
@@ -92,8 +96,15 @@ struct MainView: View {
         }
         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100.00)
         .toolbar {
-            NavigationLink(destination: SearchPostView()) {
-                Image(systemName: "magnifyingglass")
+            if selectedMenuTab == 0 {
+                NavigationLink(destination: SearchPostView()) {
+                    Image(systemName: "magnifyingglass")
+                }
+            }
+            if selectedMenuTab == 2 && selectedContractTab > 0 {
+                Toggle(isOn: $isCancel) {
+                    Text("파기")
+                }
             }
         }
     }

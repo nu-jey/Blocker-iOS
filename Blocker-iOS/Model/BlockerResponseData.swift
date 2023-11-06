@@ -70,7 +70,28 @@ struct SigningContractResponseData:Codable {
     let contractorAndSignStates:[ContractorAndSignStates]
 }
 
+struct SignedContractResponseData:Codable {
+    let contractId:Int
+    let title:String
+    let content:String
+    let createdAt:String
+    let modifiedAt:String
+    let contractorAndSignStates:[ContractorAndSignStates]
+}
+
 struct ContractorAndSignStates:Codable {
     let contractor:String
     let signState:String
+}
+
+
+struct CancelContractResponseData:Codable {
+    let cancelContractId: Int
+    let contractId: Int
+    let title: String
+    let content: String
+    let createdAt: String
+    let modifiedAt: String
+    let contractor: String
+    let contractorAndSignStates:[ContractorAndSignStates]
 }

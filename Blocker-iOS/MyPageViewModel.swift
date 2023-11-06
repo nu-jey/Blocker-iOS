@@ -8,13 +8,16 @@
 import Foundation
 
 class MyPageViewModel:ObservableObject {
-    @Published var myPost:[PostResponseData] = []
-    @Published var bookmark:[PostResponseData] = []
+    @Published var myPost:[BoardResponseData] = []
+    @Published var bookmark:[BoardResponseData] = []
     func getMyPost() {
         BlockerServer.shared.getMyPost() { result in
             switch result {
             case .success(let postData):
-                self.myPost = postData
+                DispatchQueue.main.async { [weak self] in
+                    self!.myPost = postData
+                }
+                print(postData)
             case .failure(.UNAUTHORIZATION):
                 print("UNAUTHORIZATION")
             case .failure(.BADREQUEST):
@@ -31,7 +34,10 @@ class MyPageViewModel:ObservableObject {
         BlockerServer.shared.getBookmark() { result in
             switch result {
             case .success(let postData):
-                self.bookmark = postData
+                DispatchQueue.main.async { [weak self] in
+                    self!.bookmark = postData
+                }
+                print(postData)
             case .failure(.UNAUTHORIZATION):
                 print("UNAUTHORIZATION")
             case .failure(.BADREQUEST):
